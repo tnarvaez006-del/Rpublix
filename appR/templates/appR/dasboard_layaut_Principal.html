@@ -1,0 +1,111 @@
+{% extends "appR/dashboard_P.html" %}
+{% load static %}
+
+{% block contenido_dashboard %}
+
+<main>
+
+    <!-- TARJETAS TOP -->
+    <section class="cards">
+        <div class="card">
+            <h3>Órdenes totales</h3>
+            <p class="number">{{ total_orders }}</p>
+        </div>
+
+        <div class="card">
+            <h3>En proceso</h3>
+            <p class="number">{{ in_progress }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Finalizadas</h3>
+            <p class="number">{{ finished_orders }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Atrasadas</h3>
+            <p class="number alert">{{ late_orders }}</p>
+        </div>
+    </section>
+
+    <!-- ÓRDENES RECIENTES -->
+    <section class="panel">
+        <h2>Órdenes recientes</h2>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Categoría</th>
+                        <th>Entrega</th>
+                        <th>Estado</th>
+                        <th>Progreso</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for order in recent_orders %}
+                    <tr>
+                        <td>#{{ order.id }}</td>
+                        <td>{{ order.cliente.nombre }}</td>
+                        <td>{{ order.categoria }}</td>
+                        <td>{{ order.fecha_entrega|date:"d/m/Y" }}</td>
+                        <td>{{ order.estado }}</td>
+
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar"></div>
+                            </div>
+                            <small>{{ order.progress }}%</small>
+                        </td>
+
+                        <td>
+                            <a class="link" href="{% url 'ordenes:detail' order.id %}">Ver</a>
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">No hay órdenes recientes.</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SEMÁFORO + PROCESOS -->
+    <section class="panel two-cols">
+
+        <div class="card soft">
+            <h3>Semáforo por estado</h3>
+            <ul class="semaforo-list">
+                <li><span class="dot red"></span> Atrasadas ({{ late_count }})</li>
+                <li><span class="dot yellow"></span> En riesgo ({{ risk_count }})</li>
+                <li><span class="dot green"></span> A tiempo ({{ ontime_count }})</li>
+            </ul>
+        </div>
+
+        <div class="card soft">
+            <h3>Últimos procesos</h3>
+            <ul class="process-list">
+                {% for proc in recent_processes %}
+                <li>
+                    <strong>{{ proc.nombre }}</strong>
+                    <small>{{ proc.updated_at|date:"d/m H:i" }}</small>
+                </li>
+                {% empty %}
+                <li>No hay procesos recientes.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </section>
+
+</main>
+
+{% endblock %}

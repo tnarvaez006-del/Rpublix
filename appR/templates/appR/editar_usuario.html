@@ -1,0 +1,31 @@
+{% extends "appR/dashboard_P.html" %}
+{% block contenido_dashboard %}
+
+<h2>Editar Usuario</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Nombre completo</label>
+    <input type="text" name="nombre_completo" value="{{ usuario.nombre_completo }}" required>
+
+    <label>Correo</label>
+    <input type="email" name="correo_empresarial" value="{{ usuario.correo_empresarial }}" required>
+
+    <label>Rol</label>
+    <select name="rol">
+        <option value="Empleado" {% if usuario.rol == "Empleado" %}selected{% endif %}>Empleado</option>
+        <option value="Privilegiado" {% if usuario.rol == "Privilegiado" %}selected{% endif %}>Privilegiado</option>
+        <option value="Admin" {% if usuario.rol == "Admin" %}selected{% endif %}>Admin</option>
+    </select>
+
+    <label>Nueva contraseña</label>
+    <input type="password" name="password" placeholder="Nueva contraseña">
+
+    <label>Confirmar contraseña</label>
+    <input type="password" name="password_confirm" placeholder="Confirmar contraseña">
+
+    <button type="submit" class="btn">Guardar</button>
+</form>
+
+{% endblock %}
