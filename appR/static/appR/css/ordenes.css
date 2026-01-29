@@ -1,0 +1,194 @@
+/* ======================================================
+   ÓRDENES DE TRABAJO | PANEL ERP
+====================================================== */
+
+.panel {
+    background: #fff;
+    padding: 26px 30px;
+    border-radius: 22px;
+    box-shadow: 0 10px 28px rgba(0,0,0,.07);
+    margin-top: 20px;
+}
+
+/* ================= HEADER ================= */
+
+.header-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.header-panel h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0B4B88;
+}
+
+/* ================= BOTÓN NUEVO ================= */
+
+.btn-add {
+    background: linear-gradient(135deg, #0B4B88, #1d6fd6);
+    color: #fff;
+    padding: 11px 22px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(11,75,136,.35);
+    transition: .25s;
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+}
+
+/* ================= TABLA ================= */
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+thead {
+    background: #0B4B88;
+    color: #fff;
+}
+
+th, td {
+    padding: 14px;
+    font-size: 14px;
+    text-align: left;
+}
+
+td {
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+tbody tr:hover {
+    background: #f4f8ff;
+}
+
+td small {
+    font-size: 12px;
+    color: #777;
+}
+
+/* ================= BADGES ================= */
+
+.badge {
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge.success {
+    background: #e6f7ef;
+    color: #198754;
+}
+
+.badge.warn {
+    background: #fff4db;
+    color: #d48806;
+}
+
+.badge.danger {
+    background: #fdeaea;
+    color: #dc3545;
+}
+
+/* ================= BOTONES ================= */
+
+.btn {
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: .25s;
+    margin-right: 6px;
+    display: inline-block;
+}
+
+.btn.edit {
+    background: #e8f1ff;
+    color: #1d5fd1;
+}
+
+.btn.warn {
+    background: #fff4db;
+    color: #d48806;
+}
+
+.btn.primary {
+    background: #e7f1ff;
+    color: #0B4B88;
+}
+
+.btn:hover {
+    filter: brightness(.92);
+}
+
+/* ======================================================
+   RESPONSIVE — MOBILE FIRST
+====================================================== */
+
+@media (max-width: 900px) {
+
+    thead {
+        display: none;
+    }
+
+    table,
+    tbody,
+    tr {
+        display: block;
+        width: 100%;
+    }
+
+    tbody tr {
+        background: #fff;
+        margin-bottom: 18px;
+        padding: 18px 20px;
+        border-radius: 18px;
+        box-shadow: 0 6px 16px rgba(0,0,0,.08);
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border: none;
+        font-size: 13px;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #0B4B88;
+    }
+
+    td:last-child {
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        margin-right: 0;
+    }
+}

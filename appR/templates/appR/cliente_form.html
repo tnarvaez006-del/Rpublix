@@ -1,0 +1,118 @@
+{% extends "appR/dashboard_P.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'appR/css/form_cliente.css' %}">
+{% endblock %}
+
+{% block contenido_dashboard %}
+
+<section class="panel">
+
+    <!-- HEADER -->
+    <div class="header-panel">
+        <h2>{{ titulo }}</h2>
+    </div>
+
+    <!-- ERRORES GENERALES -->
+    {% if form.non_field_errors %}
+    <div class="alert danger">
+        {{ form.non_field_errors }}
+    </div>
+    {% endif %}
+
+    <form method="POST" class="form-panel" novalidate>
+        {% csrf_token %}
+
+        <!-- NOMBRE -->
+        <div class="form-group">
+            <label>Nombre</label>
+            {{ form.nombre }}
+            {{ form.nombre.errors }}
+        </div>
+
+        <!-- CÉDULA -->
+        <div class="form-group">
+            <label>Cédula</label>
+            {{ form.cedula }}
+            {{ form.cedula.errors }}
+        </div>
+
+        <!-- TELÉFONO -->
+        <div class="form-group">
+            <label>Teléfono</label>
+            {{ form.telefono }}
+            {{ form.telefono.errors }}
+        </div>
+
+        <!-- CORREO -->
+        <div class="form-group">
+            <label>Correo</label>
+            {{ form.correo }}
+            {{ form.correo.errors }}
+        </div>
+
+        <!-- TIPO CLIENTE -->
+        <div class="form-group">
+            <label>Tipo de Cliente</label>
+            {{ form.tipo_cliente }}
+            {{ form.tipo_cliente.errors }}
+        </div>
+
+        <!-- CATEGORÍA -->
+        <div class="form-group">
+            <label>Categoría</label>
+            {{ form.categoria }}
+            {{ form.categoria.errors }}
+        </div>
+
+        <!-- EDAD -->
+        <div class="form-group">
+            <label>Edad</label>
+            {{ form.edad }}
+            {{ form.edad.errors }}
+        </div>
+
+        <!-- GÉNERO -->
+        <div class="form-group">
+            <label>Género</label>
+            {{ form.genero }}
+            {{ form.genero.errors }}
+        </div>
+
+        <!-- ACCIONES -->
+        <div class="form-actions">
+            <button type="submit" class="btn success">Guardar</button>
+            <a href="{% url 'clientes_list' %}" class="btn danger">Cancelar</a>
+        </div>
+
+    </form>
+</section>
+
+<!-- ===========================
+     JS FORMATO CÉDULA 🇳🇮
+=========================== -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.querySelector('input[name="cedula"]');
+    if (!input) return;
+
+    input.addEventListener("input", function () {
+        let value = input.value
+            .replace(/[^0-9A-Za-z]/g, "")
+            .toUpperCase();
+
+        let formatted = "";
+
+        if (value.length > 0) formatted += value.substring(0, 3);
+        if (value.length > 3) formatted += "-" + value.substring(3, 9);
+        if (value.length > 9) formatted += "-" + value.substring(9, 13);
+        if (value.length > 13) formatted += value.substring(13, 14);
+
+        input.value = formatted;
+    });
+
+    input.setAttribute("maxlength", "16");
+});
+</script>
+
+{% endblock %}

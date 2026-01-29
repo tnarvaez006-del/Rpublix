@@ -1,0 +1,237 @@
+/* =====================================================
+   DETALLE DE ORDEN DE TRABAJO
+   Estilo ERP moderno y profesional
+===================================================== */
+
+/* ---------------- PANEL ---------------- */
+
+.panel {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.06);
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ---------------- HEADER ---------------- */
+
+.header-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.header-panel h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0b4b88;
+}
+
+/* ---------------- ACCIONES ---------------- */
+
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    border: none;
+    border-radius: 12px;
+    padding: 9px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: .25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn.small {
+    font-size: 13px;
+    padding: 8px 14px;
+}
+
+.btn.edit {
+    background: #e8f1ff;
+    color: #1d5fd1;
+}
+
+.btn.edit:hover {
+    background: #1d5fd1;
+    color: #fff;
+}
+
+.btn.warn {
+    background: #fff4e5;
+    color: #b87000;
+}
+
+.btn.warn:hover {
+    background: #ffcb70;
+}
+
+.btn.danger {
+    background: #ffe5e5;
+    color: #b30000;
+}
+
+.btn.danger:hover {
+    background: #ffcccc;
+}
+
+/* ---------------- GRID ---------------- */
+
+.two-cols {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+/* ---------------- TITULOS ---------------- */
+
+h3 {
+    font-size: 17px;
+    color: #0b4b88;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+/* ---------------- BADGES ---------------- */
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge.success {
+    background: #e6f7ef;
+    color: #1a8f5a;
+}
+
+.badge.warn {
+    background: #fff4e5;
+    color: #b87000;
+}
+
+.badge.danger {
+    background: #ffeaea;
+    color: #b30000;
+}
+
+/* ---------------- DIVISOR ---------------- */
+
+hr {
+    border: none;
+    height: 1px;
+    background: #eee;
+    margin: 25px 0;
+}
+
+/* ---------------- TARJETAS ITEMS ---------------- */
+
+.card {
+    background: #f8fbff;
+    border: 1px solid #e1ecf8;
+    border-radius: 16px;
+    padding: 18px;
+}
+
+.card h4 {
+    margin: 6px 0;
+    color: #1d5fd1;
+}
+
+.card ul {
+    margin-top: 8px;
+    padding-left: 20px;
+}
+
+.card ul li {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+/* =====================================================
+   MODAL ELIMINAR
+===================================================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 25px;
+    max-width: 420px;
+    width: 90%;
+    animation: fadeIn .25s ease;
+}
+
+.modal-content h3 {
+    color: #b30000;
+    margin-bottom: 10px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* ---------------- ANIMACIÓN ---------------- */
+
+@keyframes fadeIn {
+    from {
+        transform: translateY(-15px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .panel {
+        padding: 22px;
+    }
+
+    .two-cols {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .actions {
+        justify-content: flex-start;
+    }
+
+    .card {
+        padding: 15px;
+    }
+}

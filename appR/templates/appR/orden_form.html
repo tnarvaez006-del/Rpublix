@@ -1,0 +1,80 @@
+{% extends "appR/dashboard_P.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'appR/css/orden_form.css' %}">
+{% endblock %}
+
+{% block contenido_dashboard %}
+
+<div class="panel orden-panel">
+
+    <div class="header-panel">
+        <h2>{% if editando %}Editar Orden{% else %}Nueva Orden{% endif %}</h2>
+    </div>
+
+    <form method="POST" class="orden-form">
+        {% csrf_token %}
+
+        <!-- CLIENTE -->
+        <div class="form-group">
+            <label>Cliente</label>
+            {{ form.cliente }}
+        </div>
+
+        <!-- RESPONSABLE -->
+        <div class="form-group">
+            <label>Responsable</label>
+            <input type="text" class="input" value="{{ request.user }}" disabled>
+        </div>
+
+        <!-- FECHA -->
+        <div class="form-group">
+            <label>Fecha de entrega</label>
+            {{ form.fecha_entrega }}
+        </div>
+
+        <hr>
+
+        <!-- ITEMS -->
+        <h3 class="subtitle">Productos / Servicios</h3>
+
+        <div id="items-container" class="items-container"></div>
+
+        <button type="button" id="add-item" class="btn add">
+            ➕ Agregar producto
+        </button>
+
+        <div class="form-actions">
+            <button type="submit" id="submit-btn" class="btn success" disabled>
+                💾 Guardar Orden
+            </button>
+        </div>
+
+    </form>
+</div>
+
+<!-- ===========================
+     ITEMS EXISTENTES (EDICIÓN)
+=========================== -->
+<script>
+const existingItems = [
+{% if items %}
+{% for item in items %}
+{
+    nombre: "{{ item.nombre|escapejs }}",
+    cantidad: "{{ item.cantidad }}",
+    requerimientos: [
+        {% for req in item.requerimientos.all %}
+        "{{ req.descripcion|escapejs }}",
+        {% endfor %}
+    ]
+},
+{% endfor %}
+{% endif %}
+];
+</script>
+
+<script src="{% static 'appR/js/orden_form.js' %}"></script>
+
+{% endblock %}

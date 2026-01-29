@@ -1,0 +1,213 @@
+/* ==================================================
+   USUARIOS - PANEL ADMIN
+================================================== */
+
+.usuarios-panel {
+    margin-top: 20px;
+}
+
+/* ================= HEADER ================= */
+
+.header-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.header-panel h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0B4B88;
+}
+
+/* ================= BOTÓN AGREGAR ================= */
+
+.btn-add {
+    background: #0B4B88;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(11, 75, 136, 0.25);
+}
+
+.btn-add:hover {
+    background: #083a6b;
+    transform: translateY(-2px);
+}
+
+/* ================= TABLA ================= */
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,.05);
+}
+
+thead {
+    background: #0B4B88;
+    color: #fff;
+}
+
+th {
+    padding: 13px;
+    font-size: 14px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+    background: #f3f8ff;
+}
+
+.empty {
+    text-align: center;
+    padding: 25px;
+    font-weight: 500;
+    color: #666;
+}
+
+/* ================= BADGES ================= */
+
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge.success {
+    background: #e6f9f0;
+    color: #0f8a5f;
+}
+
+.badge.danger {
+    background: #ffe6e6;
+    color: #c0392b;
+}
+
+/* ================= BOTONES ================= */
+
+.btn {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.25s;
+    display: inline-block;
+}
+
+.btn.small {
+    font-size: 12px;
+}
+
+/* colores */
+
+.btn.edit {
+    background: #e8f1ff;
+    color: #1d5fd1;
+}
+
+.btn.edit:hover {
+    background: #1d5fd1;
+    color: #fff;
+}
+
+.btn.warn {
+    background: #fff4d6;
+    color: #c28a00;
+}
+
+.btn.warn:hover {
+    background: #c28a00;
+    color: #fff;
+}
+
+.btn.success {
+    background: #e6f9f0;
+    color: #0f8a5f;
+}
+
+.btn.success:hover {
+    background: #0f8a5f;
+    color: #fff;
+}
+
+.btn.danger {
+    background: #ffe6e6;
+    color: #c0392b;
+}
+
+.btn.danger:hover {
+    background: #c0392b;
+    color: #fff;
+}
+
+/* ================= ACCIONES ================= */
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+    thead {
+        display: none;
+    }
+
+    table {
+        box-shadow: none;
+        background: transparent;
+    }
+
+    table tr {
+        display: block;
+        background: #fff;
+        margin-bottom: 16px;
+        padding: 15px;
+        border-radius: 14px;
+        box-shadow: 0 5px 12px rgba(0,0,0,.06);
+    }
+
+    table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border: none;
+        font-size: 13px;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #0B4B88;
+    }
+
+    .acciones {
+        justify-content: flex-end;
+        margin-top: 8px;
+    }
+}

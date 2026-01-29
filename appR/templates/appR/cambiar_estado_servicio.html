@@ -1,0 +1,38 @@
+{% extends "appR/dashboard_P.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'appR/css/cambiar_estado.css' %}">
+{% endblock %}
+
+{% block contenido_dashboard %}
+
+<div class="panel-semaforo">
+
+    <h2>Control de estado</h2>
+    <p class="servicio">{{ item.nombre }}</p>
+
+    <form method="post" class="semaforo-form">
+        {% csrf_token %}
+
+        <button type="submit" name="estado" value="Pendiente"
+            class="luz rojo {% if item.estado == 'Pendiente' %}activo{% endif %}">
+        </button>
+
+        <button type="submit" name="estado" value="En proceso"
+            class="luz amarillo {% if item.estado == 'En proceso' %}activo{% endif %}">
+        </button>
+
+        <button type="submit" name="estado" value="Completado"
+            class="luz verde {% if item.estado == 'Completado' %}activo{% endif %}">
+        </button>
+
+    </form>
+
+    <a href="{% url 'orden_revision' item.orden.id %}" class="volver">
+        ← Volver a la orden
+    </a>
+
+</div>
+
+{% endblock %}

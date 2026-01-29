@@ -1,0 +1,196 @@
+{% extends "appR/dashboard_P.html" %}
+
+{% block contenido_dashboard %}
+<h2>Agregar procesos a la Orden #{{ item.orden.id }}</h2>
+
+<div class="procesos-wrapper">
+
+    <!-- ================= SECCION DE PROCESOS EXISTENTES ================= -->
+    <div class="procesos-existentes">
+        <h3>Procesos existentes por ítem</h3>
+
+        {% for item_servicio in item.orden.items.all %}
+            <div class="item-box">
+                <h4>{{ item_servicio.nombre }} (Cantidad: {{ item_servicio.cantidad }})</h4>
+                
+                {% if item_servicio.procesos.exists %}
+                    <ul>
+                    {% for proceso in item_servicio.procesos.all %}
+                        <li>
+                            <strong>{{ proceso.nombre }}</strong> - {{ proceso.estado }} <br>
+                            Responsable: {% if proceso.responsable %}{{ proceso.responsable.nombre_completo }}{% else %}Sin asignar{% endif %} <br>
+                            Fechas: {% if proceso.fecha_inicio %}{{ proceso.fecha_inicio|date:"d/m/Y" }}{% endif %} 
+                                    - {% if proceso.fecha_fin %}{{ proceso.fecha_fin|date:"d/m/Y" }}{% endif %} <br>
+                            Descripción: {{ proceso.descripcion }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="badge warn">Sin procesos agregados</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <!-- ================= SECCION FORMULARIO ================= -->
+    <div class="procesos-form">
+        <h3>Agregar nuevo proceso</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{ formset.management_form }}
+
+            <div id="procesos-container">
+                {% for form in formset %}
+                    <div class="proceso-box">
+                        {{ form.nombre.label_tag }} {{ form.nombre }}
+                        {{ form.descripcion.label_tag }} {{ form.descripcion }}
+                        {{ form.responsable.label_tag }} {{ form.responsable }}
+                        {{ form.fecha_inicio.label_tag }} {{ form.fecha_inicio }}
+                        {{ form.fecha_fin.label_tag }} {{ form.fecha_fin }}
+                        {{ form.estado.label_tag }} {{ form.estado }}
+                        {% if form.DELETE %} {{ form.DELETE }} {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="button" id="add-proceso-btn">➕ Agregar otro proceso</button>
+            <button type="submit" class="btn save">Guardar procesos</button>
+        </form>
+    </div>
+
+</div>
+
+<!-- ================= SCRIPT PARA AGREGAR FORMULARIOS ================= -->
+<script>
+    const addBtn = document.getElementById("add-proceso-btn");
+    const container = document.getElementById("procesos-container");
+
+    addBtn.addEventListener("click", () => {
+        const totalForms = document.querySelector('#id_proceso_set-TOTAL_FORMS');
+        const currentCount = parseInt(totalForms.value);
+        const newForm = container.children[0].cloneNode(true);
+
+        newForm.querySelectorAll('input, select, textarea').forEach(input => {
+            if (input.type === 'checkbox') input.checked = false;
+            else input.value = '';
+        });
+
+        newForm.innerHTML = newForm.innerHTML.replace(/-0-/g, `-${currentCount}-`);
+        container.appendChild(newForm);
+        totalForms.value = currentCount + 1;
+    });
+</script>
+
+<!-- ================= ESTILOS ================= -->
+<style>
+.procesos-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* ============ SECCION EXISTENTES ============ */
+.procesos-existentes {
+    flex: 1 1 45%;
+    background: #f7f7f7;
+    padding: 15px;
+    border-radius: 10px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.item-box {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.item-box h4 {
+    margin-bottom: 5px;
+}
+
+.item-box ul {
+    padding-left: 20px;
+}
+
+.badge.warn {
+    color: #856404;
+    background-color: #fff3cd;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* ============ SECCION FORMULARIO ============ */
+.procesos-form {
+    flex: 1 1 45%;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+.proceso-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.proceso-box label {
+    display: block;
+    margin-top: 8px;
+    font-weight: 500;
+}
+
+.proceso-box input,
+.proceso-box select,
+.proceso-box textarea {
+    width: 100%;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-top: 4px;
+}
+
+#add-proceso-btn {
+    background-color: #5cb85c;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#add-proceso-btn:hover {
+    background-color: #449d44;
+}
+
+.btn.save {
+    background-color: #0275d8;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.btn.save:hover {
+    background-color: #025aa5;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 900px) {
+    .procesos-wrapper {
+        flex-direction: column;
+    }
+}
+</style>
+
+{% endblock %}

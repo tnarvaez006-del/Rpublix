@@ -1,0 +1,155 @@
+/* ======================================================
+   FORMULARIO CLIENTE | ERP PROFESIONAL
+====================================================== */
+
+.panel {
+    background: #ffffff;
+    padding: 30px 35px;
+    border-radius: 22px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+/* ================= HEADER ================= */
+
+.header-panel h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0B4B88;
+    margin-bottom: 20px;
+}
+
+/* ================= ALERTAS ================= */
+
+.alert {
+    padding: 14px 18px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.alert.danger {
+    background: #fdecec;
+    color: #b42323;
+    border-left: 6px solid #dc3545;
+}
+
+/* ================= FORM ================= */
+
+.form-panel {
+    max-width: 720px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* ================= INPUT GROUP ================= */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #0B4B88;
+    margin-bottom: 6px;
+}
+
+/* INPUTS */
+.form-group input,
+.form-group select {
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid #dcdcdc;
+    font-size: 14px;
+    background: #f9fbff;
+    transition: .25s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #0B4B88;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(11,75,136,.18);
+}
+
+/* ERRORES DJANGO */
+.form-group ul {
+    list-style: none;
+    margin-top: 5px;
+    padding: 0;
+    font-size: 12px;
+    color: #dc3545;
+}
+
+/* ================= ACTIONS ================= */
+
+.form-actions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+/* ================= BOTONES ================= */
+
+.btn {
+    padding: 11px 26px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .3s;
+    border: none;
+}
+
+/* Guardar */
+.btn.success {
+    background: linear-gradient(135deg, #198754, #2ecc71);
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(25,135,84,.35);
+}
+
+.btn.success:hover {
+    transform: translateY(-2px);
+}
+
+/* Cancelar */
+.btn.danger {
+    background: #f1f3f5;
+    color: #444;
+}
+
+.btn.danger:hover {
+    background: #e1e4e8;
+}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 768px) {
+
+    .panel {
+        padding: 22px;
+    }
+
+    .form-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        grid-column: span 1;
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}

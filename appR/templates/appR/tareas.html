@@ -1,0 +1,105 @@
+{% extends "appR/dashboard_P.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'appR/css/tareas.css' %}">
+{% endblock %}
+
+{% block contenido_dashboard %}
+
+<div class="panel">
+
+    <h2>📅 Mis tareas</h2>
+    <p class="descripcion-panel">
+        Organiza tus actividades semanales y marca tu progreso.
+    </p>
+
+    <!-- FORMULARIO -->
+    <form method="post" class="form-tarea">
+        {% csrf_token %}
+
+        <label>Título de la tarea</label>
+        <input 
+            type="text" 
+            name="titulo" 
+            placeholder="Ej: Entregar reporte semanal" 
+            required
+        >
+
+        <label>Descripción (opcional)</label>
+        <textarea 
+            name="descripcion" 
+            placeholder="Detalles importantes de la tarea..."
+        ></textarea>
+
+        <div class="fechas">
+
+            <div class="campo-fecha">
+                <label>Fecha de inicio</label>
+                <input type="date" name="fecha_inicio" required>
+                <small>
+                    Día en que comienzas esta tarea
+                </small>
+            </div>
+
+            <div class="campo-fecha">
+                <label>Fecha límite</label>
+                <input type="date" name="fecha_fin" required>
+                <small>
+                    Fecha máxima para completarla
+                </small>
+            </div>
+
+        </div>
+
+        <button type="submit">➕ Agregar tarea</button>
+    </form>
+
+    <!-- LISTADO -->
+    <div class="lista-tareas">
+
+        {% for tarea in tareas %}
+        <div class="tarea-card">
+
+            <div class="tarea-header">
+                <strong>{{ tarea.titulo }}</strong>
+
+                <span class="estado {{ tarea.estado|lower }}">
+                    {{ tarea.estado }}
+                </span>
+            </div>
+
+            {% if tarea.descripcion %}
+                <p>{{ tarea.descripcion }}</p>
+            {% endif %}
+
+            <small>
+                📆 {{ tarea.fecha_inicio }} → {{ tarea.fecha_fin }}
+            </small>
+
+            <div class="acciones">
+
+                {% if tarea.estado != "Completada" %}
+                <a href="{% url 'completar_tarea' tarea.id %}" class="btn ok">
+                    ✅ Completar
+                </a>
+                {% endif %}
+
+                <a href="{% url 'eliminar_tarea' tarea.id %}" class="btn danger">
+                    🗑 Eliminar
+                </a>
+
+            </div>
+
+        </div>
+        {% empty %}
+        <p class="empty">
+            No tienes tareas registradas
+        </p>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

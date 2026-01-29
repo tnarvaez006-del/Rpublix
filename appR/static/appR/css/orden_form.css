@@ -1,0 +1,279 @@
+/* =====================================================
+   FORMULARIO DE ORDEN DE TRABAJO
+   Diseño ERP profesional - limpio y moderno
+===================================================== */
+
+/* ---------------- PANEL ---------------- */
+
+.orden-panel {
+    max-width: 950px;
+    margin: auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.06);
+}
+
+/* ---------------- TITULO ---------------- */
+
+.header-panel h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0b4b88;
+    margin-bottom: 20px;
+}
+
+/* ---------------- FORM ---------------- */
+
+.orden-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+/* ---------------- CAMPOS ---------------- */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #0b4b88;
+}
+
+.input,
+select,
+input[type="date"],
+input[type="text"],
+input[type="number"] {
+    padding: 11px 14px;
+    border-radius: 12px;
+    border: 1px solid #dcdcdc;
+    font-size: 14px;
+    background: #fff;
+    transition: all .2s ease;
+}
+
+.input:focus,
+select:focus,
+input:focus {
+    outline: none;
+    border-color: #0b4b88;
+    box-shadow: 0 0 0 3px rgba(11,75,136,.15);
+}
+
+/* ---------------- DIVISOR ---------------- */
+
+hr {
+    grid-column: 1 / -1;
+    border: none;
+    height: 1px;
+    background: #eee;
+    margin: 5px 0 15px;
+}
+
+/* ---------------- SUBTITULO ---------------- */
+
+.subtitle {
+    grid-column: 1 / -1;
+    font-size: 18px;
+    font-weight: 600;
+    color: #0b4b88;
+    margin-top: 5px;
+}
+
+/* =====================================================
+   ITEMS
+===================================================== */
+
+.items-container {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* ---------- ITEM CARD ---------- */
+
+.item-box {
+    background: #f8fbff;
+    border: 1px solid #e1ecf8;
+    border-radius: 16px;
+    padding: 18px;
+}
+
+/* ---------- HEADER ITEM ---------- */
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.item-header h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0b4b88;
+}
+
+.btn-remove-item {
+    background: #ffe5e5;
+    color: #b30000;
+    border: none;
+    border-radius: 10px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-remove-item:hover {
+    background: #ffcccc;
+}
+
+/* ---------- INPUTS ITEM ---------- */
+
+.item-box label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    display: block;
+    color: #333;
+}
+
+.item-box input {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+/* =====================================================
+   REQUERIMIENTOS
+===================================================== */
+
+.requerimientos {
+    background: #ffffff;
+    border: 1px dashed #cfdff5;
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.requerimientos-title {
+    font-weight: 600;
+    color: #0b4b88;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+/* ---------- FILA REQ ---------- */
+
+.requerimiento {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.requerimiento input {
+    flex: 1;
+}
+
+.btn-remove-req {
+    background: #ffeaea;
+    color: #b30000;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.btn-remove-req:hover {
+    background: #ffcfcf;
+}
+
+/* ---------- BOTÓN AGREGAR REQ ---------- */
+
+.btn-add-req {
+    margin-top: 6px;
+    background: #e8f1ff;
+    color: #1d5fd1;
+    border: none;
+    border-radius: 10px;
+    padding: 7px 12px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-add-req:hover {
+    background: #1d5fd1;
+    color: #fff;
+}
+
+/* =====================================================
+   BOTONES GENERALES
+===================================================== */
+
+.btn {
+    border: none;
+    border-radius: 12px;
+    padding: 11px 22px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.btn.add {
+    background: #e8f1ff;
+    color: #1d5fd1;
+}
+
+.btn.add:hover {
+    background: #1d5fd1;
+    color: #fff;
+}
+
+.btn.success {
+    background: linear-gradient(135deg, #0b4b88, #1d6fd8);
+    color: #ffffff;
+}
+
+.btn.success:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ---------------- ACCIONES ---------------- */
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .orden-panel {
+        padding: 22px;
+    }
+
+    .orden-form {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        justify-content: center;
+    }
+
+    .item-header h4 {
+        font-size: 14px;
+    }
+}

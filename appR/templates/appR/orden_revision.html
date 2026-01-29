@@ -1,0 +1,72 @@
+{% extends "appR/dashboard_P.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'appR/css/ordenes_revision.css' %}">
+{% endblock %}
+
+{% block contenido_dashboard %}
+
+<div class="panel">
+
+    <h2>🧾 Orden #{{ orden.id }}</h2>
+
+    <p class="info">
+        <strong>Cliente:</strong> {{ orden.cliente.nombre }} <br>
+        <strong>Entrega:</strong> {{ orden.fecha_entrega|date:"d/m/Y" }} <br>
+        <strong>Estado general:</strong>
+        <span class="orden-estado">{{ orden.estado }}</span>
+    </p>
+
+    <table class="tabla">
+
+        <thead>
+            <tr>
+                <th>Servicio</th>
+                <th>Cantidad</th>
+                <th>Estado</th>
+                <th>Semáforo</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in servicios %}
+            <tr>
+
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.cantidad }}</td>
+
+                <td>
+                    {{ item.estado }}
+                </td>
+
+                <td>
+
+                    <form method="post" class="semaforo-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ item.id }}">
+
+                        <button name="estado" value="Pendiente"
+                            class="dot red {% if item.estado == 'Pendiente' %}active{% endif %}">
+                        </button>
+
+                        <button name="estado" value="En proceso"
+                            class="dot yellow {% if item.estado == 'En proceso' %}active{% endif %}">
+                        </button>
+
+                        <button name="estado" value="Completado"
+                            class="dot green {% if item.estado == 'Completado' %}active{% endif %}">
+                        </button>
+                    </form>
+
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

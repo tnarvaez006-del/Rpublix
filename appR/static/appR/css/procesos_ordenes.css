@@ -1,0 +1,225 @@
+/* =====================================================
+   PANEL PROCESOS – ÓRDENES
+   CSS OPTIMIZADO + RESPONSIVE REAL
+===================================================== */
+
+:root {
+    --primary: #1d5fd1;
+    --primary-dark: #0b4b88;
+    --success: #1a8f5a;
+    --warn-bg: #fff4e5;
+    --warn-text: #b87000;
+    --danger-bg: #ffeaea;
+    --danger-text: #b30000;
+    --border: #e1e8f0;
+    --bg-soft: #f9fbff;
+    --radius: 14px;
+    --transition: .25s ease;
+}
+
+/* ---------------- PANEL ---------------- */
+
+.panel {
+    background: #fff;
+    padding: 28px;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 26px rgba(0,0,0,.06);
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* ---------------- HEADER ---------------- */
+
+.header-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.header-panel h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+/* ---------------- FILTRO ---------------- */
+
+.header-panel select {
+    padding: 9px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+    background: var(--bg-soft);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.header-panel select:hover {
+    border-color: var(--primary);
+}
+
+/* ---------------- TABLA ---------------- */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+thead {
+    background: #f1f6ff;
+}
+
+thead th {
+    padding: 14px;
+    font-size: 14px;
+    text-align: left;
+    color: var(--primary-dark);
+    border-bottom: 1px solid var(--border);
+}
+
+tbody td {
+    padding: 14px;
+    font-size: 14px;
+    border-bottom: 1px solid #f2f2f2;
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background: var(--bg-soft);
+}
+
+/* ---------------- BADGES ---------------- */
+
+.badge {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge.warn {
+    background: var(--warn-bg);
+    color: var(--warn-text);
+}
+
+.badge.danger {
+    background: var(--danger-bg);
+    color: var(--danger-text);
+}
+
+/* ---------------- BOTONES ---------------- */
+
+.btn {
+    border: none;
+    border-radius: 10px;
+    padding: 7px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--transition);
+    display: inline-block;
+    margin-bottom: 6px;
+}
+
+.btn.small {
+    font-size: 12px;
+    padding: 6px 12px;
+}
+
+.btn.edit {
+    background: #e8f1ff;
+    color: var(--primary);
+}
+
+.btn.edit:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn.add {
+    background: #e6f7ef;
+    color: var(--success);
+}
+
+.btn.add:hover {
+    background: var(--success);
+    color: #fff;
+}
+
+/* =====================================================
+   RESPONSIVE PROFESIONAL
+===================================================== */
+
+/* -------- TABLET -------- */
+
+@media (max-width: 900px) {
+    table {
+        min-width: 700px;
+    }
+}
+
+/* -------- MÓVIL REAL (CARDS) -------- */
+
+@media (max-width: 640px) {
+
+    .panel {
+        padding: 18px;
+    }
+
+    .header-panel {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* ocultar cabecera */
+    thead {
+        display: none;
+    }
+
+    table,
+    tbody,
+    tr,
+    td {
+        display: block;
+        width: 100%;
+    }
+
+    tbody tr {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 14px;
+        margin-bottom: 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,.04);
+    }
+
+    tbody td {
+        border: none;
+        padding: 6px 0;
+        font-size: 14px;
+    }
+
+    tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        display: block;
+        color: var(--primary-dark);
+        margin-bottom: 2px;
+        font-size: 13px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}

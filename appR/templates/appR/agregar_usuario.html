@@ -1,12 +1,27 @@
 {% extends "appR/dashboard_P.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'appR/css/usuarios_form.css' %}">
+{% endblock %}
+
 {% block contenido_dashboard %}
 
 <section class="panel">
     <div class="header-panel">
         <h2>Agregar Usuario</h2>
     </div>
+
+    <!-- 🔥 BLOQUE PARA MOSTRAR MENSAJES -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     <form method="POST" class="form-panel">
         {% csrf_token %}

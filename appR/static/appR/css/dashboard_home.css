@@ -1,0 +1,161 @@
+.dashboard-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* ================= TARJETAS ================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.06);
+}
+
+.card h3 {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.card .number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0B4B88;
+}
+
+.card.blue .number { color: #1d6fd6; }
+.card.green .number { color: #198754; }
+.card.red .number { color: #dc3545; }
+
+/* ================= PANEL ================= */
+
+.panel {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 25px;
+    box-shadow: 0 12px 28px rgba(0,0,0,.06);
+}
+
+.panel.soft {
+    background: #f8fafc;
+}
+
+.panel-header {
+    margin-bottom: 18px;
+}
+
+.panel-header h2 {
+    font-size: 18px;
+    color: #0B4B88;
+}
+
+/* ================= TABLA ================= */
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 12px;
+    font-size: 13px;
+    color: #555;
+    border-bottom: 1px solid #eee;
+}
+
+td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.empty {
+    text-align: center;
+    padding: 25px;
+    color: #999;
+}
+
+/* ================= PROGRESO ================= */
+
+.progress {
+    background: #e9edf3;
+    height: 8px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #0B4B88, #1d6fd6);
+}
+
+/* ================= BOTONES ================= */
+
+.acciones {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn.ver {
+    background: #edf4ff;
+    color: #1d6fd6;
+}
+
+.btn.revisar {
+    background: #fff4db;
+    color: #d48806;
+}
+
+/* ================= SERVICIOS ================= */
+
+.process-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 12px;
+}
+
+.process-list li {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.process-list li:last-child {
+    border-bottom: none;
+}
+
+/* ================= SEMÁFORO ================= */
+
+.red { color: #dc3545; font-weight: 600; }
+.yellow { color: #d48806; font-weight: 600; }
+.green { color: #198754; font-weight: 600; }
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+    .acciones {
+        flex-direction: column;
+    }
+}

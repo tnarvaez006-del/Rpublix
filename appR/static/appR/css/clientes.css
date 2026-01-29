@@ -1,0 +1,200 @@
+/* ======================================================
+   CLIENTES | SISTEMA ERP PROFESIONAL
+====================================================== */
+
+.panel {
+    background: #ffffff;
+    padding: 28px 32px;
+    border-radius: 20px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+/* ================= HEADER ================= */
+
+.clientes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.clientes-header h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0B4B88;
+}
+
+/* ================= ACTIONS ================= */
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* ================= BUSCADOR ================= */
+
+.search-form input {
+    width: 240px;
+    padding: 11px 16px;
+    border-radius: 14px;
+    border: 1px solid #dcdcdc;
+    font-size: 14px;
+    transition: .25s;
+}
+
+.search-form input:focus {
+    outline: none;
+    border-color: #0B4B88;
+    box-shadow: 0 0 0 3px rgba(11,75,136,.18);
+}
+
+/* ================= BOTÓN ================= */
+
+.btn-add {
+    background: linear-gradient(135deg, #0B4B88, #1c6ed5);
+    color: #fff;
+    padding: 11px 22px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(11,75,136,.35);
+    transition: .3s;
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+}
+
+/* ================= TABLA ================= */
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #0B4B88;
+    color: #fff;
+}
+
+th {
+    padding: 14px;
+    font-size: 14px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 13px;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+    background: #f2f7ff;
+}
+
+/* ================= ACCIONES ================= */
+
+.actions {
+    text-align: right;
+}
+
+.btn.edit {
+    background: #e8f1ff;
+    color: #1d5fd1;
+    padding: 8px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: .25s;
+}
+
+.btn.edit:hover {
+    background: #1d5fd1;
+    color: #fff;
+}
+
+/* ================= SIN DATOS ================= */
+
+.no-data {
+    text-align: center;
+    padding: 30px;
+    font-weight: 500;
+    color: #666;
+}
+
+/* ======================================================
+   RESPONSIVE PREMIUM (TARJETAS)
+====================================================== */
+
+@media (max-width: 768px) {
+
+    thead {
+        display: none;
+    }
+
+    table {
+        background: transparent;
+    }
+
+    tbody {
+        display: grid;
+        gap: 18px;
+    }
+
+    tbody tr {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+        border-left: 6px solid #0B4B88;
+    }
+
+    tbody td {
+        border: none;
+        padding: 6px 0;
+        display: block;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    tbody td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: #777;
+        margin-bottom: 2px;
+    }
+
+    /* NOMBRE DESTACADO */
+    tbody td:nth-child(2) {
+        font-size: 17px;
+        font-weight: 600;
+        color: #0B4B88;
+        margin-bottom: 8px;
+    }
+
+    .actions {
+        margin-top: 14px;
+        text-align: right;
+    }
+
+    .btn.edit {
+        padding: 10px 22px;
+        font-size: 14px;
+        border-radius: 14px;
+    }
+}

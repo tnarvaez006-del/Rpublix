@@ -1,0 +1,106 @@
+{% extends "appR/dashboard_P.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'appR/css/ordenes.css' %}">
+{% endblock %}
+
+{% block contenido_dashboard %}
+
+<div class="panel">
+
+    <!-- HEADER -->
+    <div class="header-panel">
+        <h2>Órdenes de Trabajo</h2>
+        <a href="{% url 'orden_create' %}" class="btn-add">+ Nueva Orden</a>
+    </div>
+
+    <!-- TABLA -->
+    <div class="table-container">
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Servicio</th>
+                    <th>Entrega</th>
+                    <th>Estado</th>
+                    <th>Responsable</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for orden in ordenes %}
+                <tr>
+
+                    <td data-label="ID">
+                        #{{ orden.id }}
+                    </td>
+
+                    <td data-label="Cliente">
+                        {{ orden.cliente.nombre }} <br>
+                        <small>{{ orden.cliente.tipo_cliente }}</small>
+                    </td>
+
+                    <td data-label="Servicio">
+                        {{ orden.tipo_servicio }}
+                    </td>
+
+                    <td data-label="Entrega">
+                        {{ orden.fecha_entrega|date:"d/m/Y" }}
+                    </td>
+
+                    <td data-label="Estado">
+                        <span class="badge
+                            {% if orden.estado == 'Completado' %}success
+                            {% elif orden.estado == 'Cancelado' %}danger
+                            {% else %}warn{% endif %}">
+                            {{ orden.estado }}
+                        </span>
+                    </td>
+
+                    <td data-label="Responsable">
+                        {% if orden.responsable %}
+                        {{ orden.responsable.nombre_completo }}
+                        {% else %}
+                        —
+                        {% endif %}
+                    </td>
+
+                    <td data-label="Acciones">
+
+                        <a href="{% url 'orden_edit' orden.id %}" class="btn edit">
+                            ✏️ Editar
+                        </a>
+
+                        <a href="{% url 'orden_detail' orden.id %}" class="btn warn">
+                            👁 Ver
+                        </a>
+
+                        <!-- NUEVO -->
+                        <a href="{% url 'orden_revision' orden.id %}" class="btn primary">
+                            ⚙ Revisar orden
+                        </a>
+
+                    </td>
+
+
+                </tr>
+
+                {% empty %}
+                <tr>
+                    <td colspan="8" style="text-align:center; padding:30px;">
+                        No hay órdenes registradas
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "appR/dashboard_P.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'appR/css/orden_detalle.css' %}">
+{% endblock %}
+
+
+{% block contenido_dashboard %}
+<div class="panel">
+
+    <div class="header-panel">
+        <h2>Detalle de Orden #{{ orden.id }}</h2>
+
+        <div class="actions">
+            <a href="{% url 'orden_edit' orden.id %}" class="btn small edit">✏️ Editar</a>
+            <button class="btn small danger" onclick="openDeleteModal()">🗑 Eliminar</button>
+            <a href="{% url 'ordenes_list' %}" class="btn small warn">← Volver</a>
+        </div>
+    </div>
+
+    <div class="two-cols">
+        <div>
+            <h3>Información General</h3>
+            <p><strong>Estado:</strong>
+                <span
+                    class="badge {% if orden.estado == 'Completado' %}success{% elif orden.estado == 'Cancelado' %}danger{% else %}warn{% endif %}">
+                    {{ orden.estado }}
+                </span>
+            </p>
+            <p><strong>Fecha de creación:</strong> {{ orden.fecha_creacion }}</p>
+            <p><strong>Fecha de entrega:</strong> {{ orden.fecha_entrega }}</p>
+        </div>
+
+        <div>
+            <h3>Responsable</h3>
+            <p><strong>Nombre:</strong>
+                {% if orden.responsable %}{{ orden.responsable.nombre_completo }}{% else %}—{% endif %}
+            </p>
+            <p><strong>Rol:</strong>
+                {% if orden.responsable %}{{ orden.responsable.rol }}{% else %}—{% endif %}
+            </p>
+        </div>
+    </div>
+
+    <hr>
+
+    <h3>Cliente</h3>
+    <p><strong>Nombre:</strong> {{ orden.cliente.nombre }}</p>
+    <p><strong>Tipo:</strong> {{ orden.cliente.tipo_cliente }}</p>
+    <p><strong>Correo:</strong> {{ orden.cliente.correo }}</p>
+    <p><strong>Teléfono:</strong> {{ orden.cliente.telefono }}</p>
+
+    <hr>
+
+    <h3>Productos / Servicios solicitados</h3>
+    {% for item in items_con_req %}
+    <div class="card" style="margin-bottom:15px;">
+        <!-- Título del servicio -->
+        <strong>Servicio Solicitado:</strong>
+        <h4>{{ item.nombre }} (Cantidad: {{ item.cantidad }})</h4>
+
+        {% if item.requerimientos %}
+        <strong>Requerimientos:</strong>
+        <ul>
+            {% for req in item.requerimientos %}
+            <li>{{ req.descripcion }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No hay requerimientos registrados.</p>
+        {% endif %}
+    </div>
+    {% empty %}
+    <p>No hay productos registrados en esta orden.</p>
+    {% endfor %}
+
+
+</div>
+
+<!-- Modal eliminar -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <h3>⚠️ Confirmar eliminación</h3>
+        <p>¿Estás seguro de eliminar la orden <strong>#{{ orden.id }}</strong>? Esta acción no se puede deshacer.</p>
+        <form method="POST" action="{% url 'orden_delete' orden.id %}">
+            {% csrf_token %}
+            <div class="modal-actions">
+                <button type="button" class="btn warn" onclick="closeDeleteModal()">Cancelar</button>
+                <button type="submit" class="btn danger">Sí, eliminar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openDeleteModal() {
+        document.getElementById("deleteModal").style.display = "flex";
+    }
+    function closeDeleteModal() {
+        document.getElementById("deleteModal").style.display = "none";
+    }
+</script>
+
+{% endblock %}
