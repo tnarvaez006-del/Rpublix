@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <title>404 | RPubliX</title>
-
 <style>
 body{
     margin:0;
@@ -12,89 +11,54 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:radial-gradient(circle at top,#0f172a,#020617);
+    background: radial-gradient(circle at top, #0f172a, #020617);
     font-family:Segoe UI, Arial, sans-serif;
     color:white;
     text-align:center;
-    overflow:hidden;
 }
-
 .container{
-    max-width:800px;
+    max-width:720px;
+    padding:20px;
 }
-
+#img-404{
+    width:300px;
+    margin-bottom:20px;
+}
 h1{
-    font-size:120px;
-    margin:10px 0;
+    font-size:100px;
     color:#38bdf8;
-    text-shadow:6px 6px 0 #000;
+    margin:10px 0;
 }
-
 p{
-    font-size:24px;
-    opacity:.85;
+    font-size:22px;
+    opacity:0.85;
 }
-
 .btn{
-    margin-top:35px;
-    display:inline-block;
-    padding:15px 40px;
+    margin-top:30px;
+    padding:14px 36px;
     background:#38bdf8;
     color:black;
-    font-weight:bold;
     text-decoration:none;
-    border-radius:12px;
+    border-radius:10px;
     font-size:18px;
-    transition:.3s;
+    font-weight:bold;
+    transition:0.3s;
 }
 .btn:hover{
-    transform:scale(1.1);
     background:#0ea5e9;
-}
-
-/* Animación ligera */
-.hand{
-    animation:float 3s ease-in-out infinite;
-}
-@keyframes float{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-10px);}
+    transform: scale(1.08);
 }
 </style>
 </head>
-
 <body>
+
 <div class="container">
-
-    <!-- MANO BIEN HECHA -->
-    <svg class="hand" width="320" height="220" viewBox="0 0 320 220">
-
-        <!-- Cartel -->
-        <rect x="85" y="10" width="150" height="70" rx="10" fill="#0ea5e9" stroke="#fff" stroke-width="4"/>
-        <text x="160" y="55" text-anchor="middle" font-size="36" fill="black" font-weight="bold">404</text>
-
-        <!-- Dedos -->
-        <rect x="110" y="80" width="20" height="60" rx="10" fill="#f2c28b"/>
-        <rect x="140" y="80" width="20" height="60" rx="10" fill="#f2c28b"/>
-        <rect x="170" y="80" width="20" height="60" rx="10" fill="#f2c28b"/>
-        <rect x="200" y="85" width="20" height="55" rx="10" fill="#f2c28b"/>
-
-        <!-- Palma -->
-        <ellipse cx="160" cy="150" rx="80" ry="45" fill="#f2c28b"/>
-
-        <!-- Mancha pintura -->
-        <circle cx="140" cy="145" r="10" fill="#38bdf8"/>
-        <circle cx="170" cy="155" r="9" fill="#22c55e"/>
-        <circle cx="155" cy="130" r="8" fill="#ef4444"/>
-
-    </svg>
-
+    <img id="img-404" src="{% static 'img/404-hand.png' %}" alt="404 Mano sosteniendo cartel"/>
     <h1>404</h1>
     <p>Ups… este rótulo todavía no lo hemos pintado.</p>
     <p style="color:#94a3b8">RPubliX • Rótulos & Publicidad</p>
-
     <a class="btn" href="{% url 'dashboard' %}">Volver al Dashboard</a>
-
 </div>
+
 </body>
 </html>
