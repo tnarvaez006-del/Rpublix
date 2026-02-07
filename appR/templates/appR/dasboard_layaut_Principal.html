@@ -11,7 +11,6 @@
 
     <!-- ================= TARJETAS ================= -->
     <div class="cards">
-
         <div class="card">
             <h3>Órdenes totales</h3>
             <p class="number">{{ total_orders }}</p>
@@ -31,19 +30,16 @@
             <h3>Atrasadas</h3>
             <p class="number">{{ late_orders }}</p>
         </div>
-
     </div>
 
     <!-- ================= ÓRDENES ================= -->
     <section class="panel">
-
         <div class="panel-header">
             <h2>Órdenes recientes</h2>
         </div>
 
         <div class="table-container">
             <table>
-
                 <thead>
                     <tr>
                         <th>#</th>
@@ -62,49 +58,35 @@
                         <td>{{ order.cliente.nombre }}</td>
                         <td>{{ order.fecha_entrega|date:"d/m/Y" }}</td>
                         <td>{{ order.estado }}</td>
-
                         <td>
                             <div class="progress">
-                                <div class="progress-bar"
-                                     style="width: {{ order.progress }}%;">
-                                </div>
+                                <div class="progress-bar" style="width: {{ order.progress }}%;"></div>
                             </div>
                             <small>{{ order.progress }}%</small>
                         </td>
-
                         <td class="acciones">
-                            <a href="{% url 'orden_detail' order.id %}" class="btn ver">
-                                Ver
-                            </a>
-
-                            <a href="{% url 'orden_revision' order.id %}" class="btn revisar">
-                                Revisar
-                            </a>
+                            <a href="{% url 'orden_detail' order.id %}" class="btn ver">Ver</a>
+                            <a href="{% url 'orden_revision' order.id %}" class="btn revisar">Revisar</a>
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="6" class="empty">
-                            No hay órdenes recientes
-                        </td>
+                        <td colspan="6" class="empty">No hay órdenes recientes</td>
                     </tr>
                     {% endfor %}
                 </tbody>
-
             </table>
         </div>
     </section>
 
     <!-- ================= SERVICIOS ================= -->
     <section class="panel soft">
-
         <h3>Servicios recientes</h3>
 
         <ul class="process-list">
             {% for service in recent_services %}
             <li>
                 <strong>{{ service.nombre }}</strong><br>
-
                 <small>
                     Orden #{{ service.orden.id }} —
                     <span class="
@@ -120,7 +102,6 @@
             <li>No hay servicios registrados</li>
             {% endfor %}
         </ul>
-
     </section>
 
 </section>

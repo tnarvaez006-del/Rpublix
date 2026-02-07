@@ -62,16 +62,10 @@ thead {
     color: #fff;
 }
 
-th {
-    padding: 13px;
-    font-size: 14px;
-    text-align: left;
-}
-
-td {
+th, td {
     padding: 12px;
     font-size: 14px;
-    border-bottom: 1px solid #eee;
+    text-align: left;
 }
 
 tbody tr:hover {
@@ -116,50 +110,13 @@ tbody tr:hover {
     display: inline-block;
 }
 
-.btn.small {
-    font-size: 12px;
-}
+.btn.edit { background: #e8f1ff; color: #1d5fd1; }
+.btn.warn { background: #fff4d6; color: #c28a00; }
+.btn.success { background: #e6f9f0; color: #0f8a5f; }
+.btn.danger { background: #ffe6e6; color: #c0392b; }
 
-/* colores */
-
-.btn.edit {
-    background: #e8f1ff;
-    color: #1d5fd1;
-}
-
-.btn.edit:hover {
-    background: #1d5fd1;
-    color: #fff;
-}
-
-.btn.warn {
-    background: #fff4d6;
-    color: #c28a00;
-}
-
-.btn.warn:hover {
-    background: #c28a00;
-    color: #fff;
-}
-
-.btn.success {
-    background: #e6f9f0;
-    color: #0f8a5f;
-}
-
-.btn.success:hover {
-    background: #0f8a5f;
-    color: #fff;
-}
-
-.btn.danger {
-    background: #ffe6e6;
-    color: #c0392b;
-}
-
-.btn.danger:hover {
-    background: #c0392b;
-    color: #fff;
+.btn:hover {
+    filter: brightness(0.9);
 }
 
 /* ================= ACCIONES ================= */
@@ -173,15 +130,7 @@ tbody tr:hover {
 /* ================= RESPONSIVE ================= */
 
 @media (max-width: 768px) {
-
-    thead {
-        display: none;
-    }
-
-    table {
-        box-shadow: none;
-        background: transparent;
-    }
+    thead { display: none; }
 
     table tr {
         display: block;

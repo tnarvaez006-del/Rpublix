@@ -1,42 +1,51 @@
 {% extends "appR/dashboard_P.html" %}
+
 {% block contenido_dashboard %}
 
-<h2>Editar Usuario</h2>
+<section class="panel">
 
-<!-- 🔥 BLOQUE PARA MOSTRAR MENSAJES -->
-{% if messages %}
-<div class="messages">
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-</div>
-{% endif %}
+    <div class="header-panel">
+        <h2>Editar Usuario</h2>
+    </div>
 
-<form method="POST">
-    {% csrf_token %}
+    <!-- 🔥 MENSAJES -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
-    <label>Nombre completo</label>
-    <input type="text" name="nombre_completo" value="{{ usuario.nombre_completo }}" required>
+    <form method="POST" class="form-panel">
+        {% csrf_token %}
 
-    <label>Correo</label>
-    <input type="email" name="correo_empresarial" value="{{ usuario.correo_empresarial }}" required>
+        <label>Nombre completo</label>
+        <input type="text" name="nombre_completo"
+               value="{{ usuario.nombre_completo }}" required>
 
-    <label>Rol</label>
-    <select name="rol">
-        <option value="Empleado" {% if usuario.rol == "Empleado" %}selected{% endif %}>Empleado</option>
-        <option value="Privilegiado" {% if usuario.rol == "Privilegiado" %}selected{% endif %}>Privilegiado</option>
-        <option value="Admin" {% if usuario.rol == "Admin" %}selected{% endif %}>Admin</option>
-    </select>
+        <label>Correo empresarial</label>
+        <input type="email" name="correo_empresarial"
+               value="{{ usuario.correo_empresarial }}" required>
 
-    <label>Nueva contraseña</label>
-    <input type="password" name="password" placeholder="Nueva contraseña">
+        <label>Rol</label>
+        <select name="rol">
+            <option value="Empleado" {% if usuario.rol == "Empleado" %}selected{% endif %}>Empleado</option>
+            <option value="Privilegiado" {% if usuario.rol == "Privilegiado" %}selected{% endif %}>Privilegiado</option>
+            <option value="Admin" {% if usuario.rol == "Admin" %}selected{% endif %}>Admin</option>
+        </select>
 
-    <label>Confirmar contraseña</label>
-    <input type="password" name="password_confirm" placeholder="Confirmar contraseña">
+        <label>Nueva contraseña</label>
+        <input type="password" name="password" placeholder="Opcional">
 
-    <button type="submit" class="btn">Guardar</button>
-</form>
+        <label>Confirmar contraseña</label>
+        <input type="password" name="password_confirm" placeholder="Opcional">
+
+        <button type="submit" class="btn success">Guardar cambios</button>
+    </form>
+
+</section>
 
 {% endblock %}

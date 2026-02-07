@@ -50,7 +50,7 @@
                 💾 Guardar Orden
             </button>
         </div>
-
+        
     </form>
 </div>
 
@@ -58,20 +58,20 @@
      ITEMS EXISTENTES (EDICIÓN)
 =========================== -->
 <script>
-const existingItems = [
-{% if items %}
-{% for item in items %}
-{
-    nombre: "{{ item.nombre|escapejs }}",
-    cantidad: "{{ item.cantidad }}",
-    requerimientos: [
-        {% for req in item.requerimientos.all %}
-        "{{ req.descripcion|escapejs }}",
+    const existingItems = [
+        {% if items %}
+    {% for item in items %}
+    {
+        nombre: "{{ item.nombre|escapejs }}",
+            cantidad: "{{ item.cantidad }}",
+                requerimientos: [
+                    {% for req in item.requerimientos.all %}
+    "{{ req.descripcion|escapejs }}",
         {% endfor %}
     ]
 },
-{% endfor %}
-{% endif %}
+    {% endfor %}
+    {% endif %}
 ];
 </script>
 

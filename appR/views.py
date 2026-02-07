@@ -41,9 +41,14 @@ def dashboard_view(request):
     return redirect('inicio')
 
 
-@login_required(login_url='login')
 def usuarios_view(request):
-    usuarios = Usuario.objects.all()
+    user = request.user
+
+    if user.rol == "Empleado":
+        usuarios = Usuario.objects.filter(id=user.id)
+    else:
+        usuarios = Usuario.objects.all()
+
     return render(request, "appR/dashboard_usuarios.html", {"usuarios": usuarios})
 
 
@@ -93,36 +98,70 @@ def agregar_usuario_view(request):
 @login_required(login_url='login')
 def editar_usuario(request, user_id):
     usuario = get_object_or_404(Usuario, id=user_id)
+    user = request.user
+
+    # Empleado bloqueado
+    if user.rol == "Empleado":
+        messages.error(request, "No tienes permisos.")
+        return redirect("list")
+
+    # Privilegiado no puede tocar Admin
+    if user.rol == "Privilegiado" and usuario.rol == "Admin":
+        messages.error(request, "No puedes editar a un Admin.")
+        return redirect("list")
 
     if request.method == "POST":
-        usuario.nombre_completo = request.POST["nombre_completo"]
-        usuario.correo_empresarial = request.POST["correo_empresarial"]
-        usuario.rol = request.POST["rol"]
+        usuario.nombre_completo = request.POST.get("nombre_completo")
+        usuario.correo_empresarial = request.POST.get("correo_empresarial")
+        usuario.rol = request.POST.get("rol")
 
         pass1 = request.POST.get("password")
         pass2 = request.POST.get("password_confirm")
 
-        # Validación de contraseña
-        if pass1 or pass2:              # Solo si se intenta cambiar
+        if pass1 or pass2:
             if pass1 != pass2:
                 messages.error(request, "Las contraseñas no coinciden.")
                 return render(request, "appR/editar_usuario.html", {"usuario": usuario})
-            
             usuario.set_password(pass1)
 
         usuario.save()
-        messages.success(request, "Usuario actualizado correctamente.")
+        messages.success(request, "Usuario actualizado.")
         return redirect("list")
 
     return render(request, "appR/editar_usuario.html", {"usuario": usuario})
 
 
 
+
 @login_required(login_url='login')
 def deshabilitar_usuario(request, user_id):
     usuario = get_object_or_404(Usuario, id=user_id)
+    solicitante = request.user
+
+    # 🚫 No puede deshabilitarse a sí mismo
+    if solicitante.id == usuario.id:
+        messages.error(request, "No puedes deshabilitar tu propio usuario.")
+        return redirect('list')
+
+    # 🚫 Empleado no tiene permisos
+    if solicitante.rol == "Empleado":
+        messages.error(request, "No tienes permisos para realizar esta acción.")
+        return redirect('list')
+
+    # 🚫 Privilegiado no puede deshabilitar Admin
+    if solicitante.rol == "Privilegiado" and usuario.rol == "Admin":
+        messages.error(request, "Un usuario Privilegiado no puede deshabilitar a un Admin.")
+        return redirect('list')
+
+    # 🚫 Nadie puede deshabilitar a un Admin (extra seguridad)
+    if usuario.rol == "Admin":
+        messages.error(request, "No se puede deshabilitar a un usuario Admin.")
+        return redirect('list')
+
     usuario.is_active = False
     usuario.save()
+
+    messages.success(request, "Usuario deshabilitado correctamente.")
     return redirect('list')
 
 
@@ -134,11 +173,34 @@ def habilitar_usuario(request, user_id):
     return redirect('list')
 
 
+from django.contrib.auth import logout
+
 @login_required(login_url='login')
 def eliminar_usuario(request, user_id):
+    user = request.user
     usuario = get_object_or_404(Usuario, id=user_id)
+
+    # ❌ No puede eliminarse a sí mismo
+    if usuario == user:
+        messages.error(request, "No puedes eliminar tu propio usuario.")
+        return redirect("list")
+
+    # ❌ Empleado no puede eliminar
+    if user.rol == "Empleado":
+        messages.error(request, "No tienes permisos.")
+        return redirect("list")
+
+    # ❌ Privilegiado no puede eliminar Admin
+    if user.rol == "Privilegiado" and usuario.rol == "Admin":
+        messages.error(request, "No puedes eliminar a un Admin.")
+        return redirect("list")
+
     usuario.delete()
-    return redirect('list')
+    messages.success(request, "Usuario eliminado.")
+    return redirect("list")
+
+
+
 
 
 # ============================
@@ -222,14 +284,23 @@ def cliente_editar(request, id):
 
 @login_required
 def ordenes_list(request):
-    ordenes = Orden.objects.select_related(
-        "cliente",
-        "responsable"
-    ).order_by("-fecha_creacion")
+    user = request.user
+
+    if user.rol == "Admin":
+        ordenes = Orden.objects.select_related(
+            "cliente",
+            "responsable"
+        ).order_by("-fecha_creacion")
+    else:
+        ordenes = Orden.objects.select_related(
+            "cliente",
+            "responsable"
+        ).filter(responsable=user).order_by("-fecha_creacion")
 
     return render(request, "appR/ordenes_list.html", {
         "ordenes": ordenes
     })
+
 
 @login_required
 def crear_orden(request):
@@ -265,22 +336,26 @@ def crear_orden(request):
     return render(request, "appR/orden_form.html", {"form": form})
 
 
-# views.py
+def validar_acceso_orden(request, orden):
+    if request.user.rol != "Admin" and orden.responsable != request.user:
+        return False
+    return True
+
+
 @login_required
 def orden_edit(request, orden_id):
     orden = get_object_or_404(Orden, pk=orden_id)
-    form = OrdenForm(request.POST or None, instance=orden)
 
-    # Preparamos los items existentes
+    if not validar_acceso_orden(request, orden):
+        return redirect("ordenes_list")
+
+    form = OrdenForm(request.POST or None, instance=orden)
     items = orden.items.all().prefetch_related('requerimientos')
 
     if request.method == "POST" and form.is_valid():
         form.save()
-
-        # Eliminamos items antiguos y requerimientos para reemplazar por los nuevos del form
         orden.items.all().delete()
 
-        # Guardamos los nuevos items y requerimientos
         items_nombres = request.POST.getlist("item_nombre[]")
         items_cantidades = request.POST.getlist("item_cantidad[]")
 
@@ -299,7 +374,7 @@ def orden_edit(request, orden_id):
     return render(request, "appR/orden_form.html", {
         "form": form,
         "editando": True,
-        "items": items,  # enviamos los items existentes al template
+        "items": items,
     })
 
 
@@ -307,7 +382,9 @@ def orden_edit(request, orden_id):
 def orden_detail(request, orden_id):
     orden = get_object_or_404(Orden, id=orden_id)
 
-    # Prepara los items con sus requerimientos
+    if not validar_acceso_orden(request, orden):
+        return redirect("ordenes_list")
+
     items_con_req = []
     for item in orden.items.all():
         requerimientos = item.requerimientos.all()
@@ -327,6 +404,9 @@ def orden_detail(request, orden_id):
 def orden_delete(request, pk):
     orden = get_object_or_404(Orden, pk=pk)
 
+    if not validar_acceso_orden(request, orden):
+        return redirect("ordenes_list")
+
     if request.method == "POST":
         orden.delete()
         messages.success(request, "Orden eliminada correctamente")
@@ -334,28 +414,38 @@ def orden_delete(request, pk):
 
     return redirect("orden_detail", pk=pk)
 
+
+
+
 @login_required(login_url='login')
 def dasboard_layaut_Principal_view(request):
     today = now().date()
+    user = request.user
+
+    # 🔥 FILTRO BASE SEGÚN ROL
+    if user.rol == "Admin":
+        ordenes = Orden.objects.all()
+    else:
+        ordenes = Orden.objects.filter(responsable=user)
 
     # ================= TARJETAS =================
-    total_orders = Orden.objects.count()
+    total_orders = ordenes.count()
 
-    in_progress = Orden.objects.filter(
+    in_progress = ordenes.filter(
         estado="En proceso"
     ).count()
 
-    finished_orders = Orden.objects.filter(
+    finished_orders = ordenes.filter(
         estado="Completado"
     ).count()
 
-    late_orders = Orden.objects.filter(
+    late_orders = ordenes.filter(
         estado="En proceso",
         fecha_entrega__lt=today
     ).count()
 
     # ================= ÓRDENES RECIENTES =================
-    recent_orders = Orden.objects.select_related("cliente") \
+    recent_orders = ordenes.select_related("cliente") \
         .order_by("-fecha_creacion")[:5]
 
     for order in recent_orders:
@@ -366,41 +456,42 @@ def dasboard_layaut_Principal_view(request):
         else:
             order.progress = 0
 
-    # ================= SEMÁFORO DE ÓRDENES =================
-    late_count = Orden.objects.filter(
+    # ================= SEMÁFORO =================
+    late_count = ordenes.filter(
         estado="En proceso",
         fecha_entrega__lt=today
     ).count()
 
-    risk_count = Orden.objects.filter(
+    risk_count = ordenes.filter(
         estado="En proceso",
         fecha_entrega=today
     ).count()
 
-    ontime_count = Orden.objects.filter(
+    ontime_count = ordenes.filter(
         estado="En proceso",
         fecha_entrega__gt=today
     ).count()
 
     # ================= SERVICIOS RECIENTES =================
-    recent_services = ItemServicio.objects.select_related(
-        "orden"
-    ).order_by("-id")[:6]
+    if user.rol == "Admin":
+        recent_services = ItemServicio.objects.select_related("orden") \
+            .order_by("-id")[:6]
+    else:
+        recent_services = ItemServicio.objects.select_related("orden") \
+            .filter(orden__responsable=user) \
+            .order_by("-id")[:6]
 
     context = {
         "total_orders": total_orders,
         "in_progress": in_progress,
         "finished_orders": finished_orders,
         "late_orders": late_orders,
-
         "recent_orders": recent_orders,
-
         "late_count": late_count,
         "risk_count": risk_count,
         "ontime_count": ontime_count,
-
         "recent_services": recent_services,
-        "user": request.user,
+        "user": user,
     }
 
     return render(
@@ -415,6 +506,10 @@ def orden_revision(request, orden_id):
 
     orden = get_object_or_404(Orden, id=orden_id)
 
+    # 🔐 BLOQUEO DE SEGURIDAD
+    if not validar_acceso_orden(request, orden):
+        return redirect("ordenes_list")
+
     if request.method == "POST":
         item_id = request.POST.get("item_id")
         estado = request.POST.get("estado")
@@ -423,7 +518,7 @@ def orden_revision(request, orden_id):
         item.estado = estado
         item.save()
 
-        # 🔥 actualizar estado general de la orden
+        # actualizar estado general
         actualizar_estado_orden(orden)
 
         return redirect("orden_revision", orden_id=orden.id)
@@ -434,6 +529,7 @@ def orden_revision(request, orden_id):
         "orden": orden,
         "servicios": servicios
     })
+
 
 
 
