@@ -12,7 +12,8 @@
     <div class="header-panel">
         <h2>Usuarios</h2>
 
-        {% if request.user.rol != "Empleado" %}
+        {# SOLO Admin y Privilegiado pueden agregar #}
+        {% if request.user.rol == "Admin" or request.user.rol == "Privilegiado" %}
         <a href="{% url 'agregar_usuario' %}" class="btn-add">
             + Agregar usuario
         </a>
@@ -50,27 +51,25 @@
 
                     <td data-label="Acciones" class="acciones">
 
-                        {# ================= EDITAR ================= #}
-                        {% if request.user.rol == "Admin" or request.user.rol == "Privilegiado" and u.rol != "Admin" %}
-                            <a href="{% url 'editar_usuario' u.id %}" class="btn small edit">Editar</a>
-                        {% endif %}
+                        {# ================= REGLA GENERAL ================= #}
+                        {# Admin puede todo. Privilegiado solo si el usuario NO es Admin #}
 
-                        {# ============ HABILITAR / DESHABILITAR ============ #}
                         {% if request.user.rol == "Admin" or request.user.rol == "Privilegiado" and u.rol != "Admin" %}
+
+                            <a href="{% url 'editar_usuario' u.id %}" class="btn small edit">Editar</a>
+
                             {% if u.is_active %}
                                 <a href="{% url 'deshabilitar_usuario' u.id %}" class="btn small warn">Deshabilitar</a>
                             {% else %}
                                 <a href="{% url 'habilitar_usuario' u.id %}" class="btn small success">Habilitar</a>
                             {% endif %}
-                        {% endif %}
 
-                        {# ================= ELIMINAR ================= #}
-                        {% if request.user.rol == "Admin" or request.user.rol == "Privilegiado" and u.rol != "Admin" %}
                             <a href="{% url 'eliminar_usuario' u.id %}"
                                class="btn small danger"
                                onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
                                Eliminar
                             </a>
+
                         {% endif %}
 
                     </td>
