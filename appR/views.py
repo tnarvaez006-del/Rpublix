@@ -41,7 +41,7 @@ def login_view(request):
 def dashboard_view(request):
     return redirect('inicio')
 
-
+@login_required(login_url='login')
 def usuarios_view(request):
     user = request.user
 
@@ -174,7 +174,6 @@ def habilitar_usuario(request, user_id):
     return redirect('list')
 
 
-from django.contrib.auth import logout
 
 @login_required(login_url='login')
 def eliminar_usuario(request, user_id):
@@ -585,7 +584,7 @@ def eliminar_tarea(request, tarea_id):
 
 
 
-
+@login_required
 def actualizar_estado_orden(orden):
 
     servicios = orden.items.all()
