@@ -9,13 +9,14 @@ from django.utils.timezone import now
 from django.contrib.auth import logout
 from django.db.models import Q
 from django.utils.timezone import now
-
+from django.utils import timezone
 
 def logout_view(request):
     logout(request)
     return redirect('login')  # redirige a tu vista de login
 
 def login_view(request):
+
     if request.method == "POST":
         correo = request.POST.get("correo_empresarial")
         password = request.POST.get("password")
@@ -419,7 +420,7 @@ def orden_delete(request, pk):
 
 @login_required(login_url='login')
 def dasboard_layaut_Principal_view(request):
-    today = now().date()
+    today = timezone.localtime().date()
     user = request.user
 
     # 🔥 FILTRO BASE SEGÚN ROL
@@ -595,7 +596,7 @@ def actualizar_estado_orden(orden):
     rojos = servicios.filter(estado="Pendiente").count()
 
     from django.utils.timezone import now
-    hoy = now().date()
+    hoy = timezone.localtime().date()
 
     # 🟢 TODOS COMPLETADOS
     if verdes == total and total > 0:
