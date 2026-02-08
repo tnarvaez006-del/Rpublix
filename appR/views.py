@@ -583,8 +583,6 @@ def eliminar_tarea(request, tarea_id):
     return redirect("mis_tareas")
 
 
-
-@login_required
 def actualizar_estado_orden(orden):
 
     servicios = orden.items.all()
