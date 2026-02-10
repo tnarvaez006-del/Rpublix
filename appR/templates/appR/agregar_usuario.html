@@ -12,7 +12,6 @@
         <h2>Agregar Usuario</h2>
     </div>
 
-    <!-- 🔥 BLOQUE PARA MOSTRAR MENSAJES -->
     {% if messages %}
     <div class="messages">
         {% for message in messages %}
@@ -26,29 +25,47 @@
     <form method="POST" class="form-panel">
         {% csrf_token %}
 
-        <label>Nombre completo</label>
-        {{ form.nombre_completo }}
+        <div class="form-group">
+            <label>Nombre completo</label>
+            {{ form.nombre_completo }}
+        </div>
 
-        <label>Nombre de usuario</label>
-        {{ form.username }}
+        <div class="form-group">
+            <label>Nombre de usuario</label>
+            {{ form.username }}
+        </div>
 
-        <label>Correo empresarial</label>
-        {{ form.correo_empresarial }}
+        <div class="form-group">
+            <label>Correo empresarial</label>
+            {{ form.correo_empresarial }}
+        </div>
 
-        <label>Rol</label>
-        {{ form.rol }}
+        <div class="form-group">
+            <label>Rol</label>
+            {{ form.rol }}
+        </div>
 
-        <label>Activo</label>
-        {{ form.is_active }}
+        <!-- CHECKBOX BONITO -->
+        <div class="form-group checkbox-group">
+            <label for="id_is_active">Activo</label>
+            {{ form.is_active }}
+        </div>
 
-        <label>Contraseña</label>
-        <input type="password" name="password1" class="input" required>
+        <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" name="password1" required>
+        </div>
 
-        <label>Confirmar contraseña</label>
-        <input type="password" name="password2" class="input" required>
+        <div class="form-group">
+            <label>Confirmar contraseña</label>
+            <input type="password" name="password2" required>
+        </div>
 
-        <button type="submit" class="btn success">Guardar</button>
-        <a href="{% url 'list' %}" class="btn danger">Cancelar</a>
+        <div class="btn-group">
+            <button type="submit" class="btn success">Guardar</button>
+            <a href="{% url 'list' %}" class="btn danger">Cancelar</a>
+        </div>
+
     </form>
 </section>
 

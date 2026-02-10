@@ -7,10 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
 
-    <!-- CSS externo -->
     <link rel="stylesheet" href="{% static 'appR/css/login.css' %}">
 
-    <!-- Imagen de fondo (mejor práctica en Django) -->
     <style>
         body {
             background-image: url("{% static 'appR/img/fondo.png' %}");
@@ -32,16 +30,14 @@
         <h2>Iniciar Sesión</h2>
         <p>Acceso para empleados autorizados</p>
 
+        <!-- MENSAJES DE ERROR -->
         {% if messages %}
-        {% for message in messages %}
-        {% if 'login' in message.tags %}
-        <div class="msg-error">
-            <p>{{ message }}</p>
-        </div>
+            {% for message in messages %}
+                <div class="msg-error">
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
         {% endif %}
-        {% endfor %}
-        {% endif %}
-
 
         <form method="POST">
             {% csrf_token %}
@@ -59,12 +55,40 @@
             <button class="btn-login" type="submit">Ingresar</button>
 
             <div class="forgot">
-                <a href="#">¿Olvidaste tu contraseña?</a>
+                <a href="#" id="openModal">¿Olvidaste tu contraseña?</a>
             </div>
         </form>
 
     </div>
 
-</body>
+    <!-- MODAL -->
+    <div class="modal" id="modalInfo">
+        <div class="modal-content">
+            <h3>Recuperación de contraseña</h3>
+            <p>Para restablecer tu contraseña, contacta con tu manager o el área de sistemas.</p>
+            <button onclick="closeModal()">Entendido</button>
+        </div>
+    </div>
 
+    <script>
+        const modal = document.getElementById("modalInfo");
+        const openBtn = document.getElementById("openModal");
+
+        openBtn.addEventListener("click", function(e){
+            e.preventDefault();
+            modal.style.display = "flex";
+        });
+
+        function closeModal(){
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
 </html>

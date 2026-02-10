@@ -72,6 +72,15 @@ p {
 }
 
 /* Inputs */
+.input-box {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.input-box label {
+    font-size: 12px;
+}
+
 .input-box input {
     width: 100%;
     padding: 8px;
@@ -102,7 +111,77 @@ p {
     background: #1c8df2;
 }
 
+/* Link olvidaste */
+.forgot {
+    margin-top: 10px;
+}
+
 .forgot a {
     font-size: 12px;
     color: #c7d0e1;
+    text-decoration: none;
+}
+
+/* Mensaje de error */
+.msg-error {
+    background: #ff4d4d;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    animation: aparecer .3s ease;
+}
+
+@keyframes aparecer {
+    from {opacity: 0; transform: translateY(-5px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #0b4b88;
+    padding: 20px;
+    width: 260px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    animation: scaleIn .3s ease;
+}
+
+.modal-content h3 {
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    font-size: 13px;
+    margin-bottom: 15px;
+    color: #dbe7ff;
+}
+
+.modal-content button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    background: #46a8ff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@keyframes scaleIn {
+    from {transform: scale(0.8); opacity: 0;}
+    to {transform: scale(1); opacity: 1;}
 }

@@ -38,7 +38,7 @@
     font-weight: 500;
     text-decoration: none;
     box-shadow: 0 6px 18px rgba(11,75,136,.35);
-    transition: .25s;
+    transition: .25s ease;
 }
 
 .btn-add:hover {
@@ -75,6 +75,10 @@ td {
     color: #333;
 }
 
+tbody tr {
+    transition: .2s ease;
+}
+
 tbody tr:hover {
     background: #f4f8ff;
 }
@@ -84,7 +88,7 @@ td small {
     color: #777;
 }
 
-/* ================= BADGES ================= */
+/* ================= BADGES DE ESTADO ================= */
 
 .badge {
     padding: 6px 14px;
@@ -92,18 +96,23 @@ td small {
     font-size: 12px;
     font-weight: 600;
     display: inline-block;
+    min-width: 90px;
+    text-align: center;
 }
 
+/* 🟢 Completado */
 .badge.success {
     background: #e6f7ef;
     color: #198754;
 }
 
+/* 🟡 En proceso */
 .badge.warn {
     background: #fff4db;
     color: #d48806;
 }
 
+/* 🔴 Pendiente */
 .badge.danger {
     background: #fdeaea;
     color: #dc3545;
@@ -117,21 +126,24 @@ td small {
     font-size: 13px;
     font-weight: 500;
     text-decoration: none;
-    transition: .25s;
+    transition: .25s ease;
     margin-right: 6px;
     display: inline-block;
 }
 
+/* Editar */
 .btn.edit {
     background: #e8f1ff;
     color: #1d5fd1;
 }
 
+/* Advertencia */
 .btn.warn {
     background: #fff4db;
     color: #d48806;
 }
 
+/* Primario */
 .btn.primary {
     background: #e7f1ff;
     color: #0B4B88;

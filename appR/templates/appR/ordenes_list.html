@@ -23,7 +23,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Cliente</th>
-                    <th>Servicio</th>
                     <th>Entrega</th>
                     <th>Estado</th>
                     <th>Responsable</th>
@@ -43,23 +42,20 @@
                         {{ orden.cliente.nombre }} <br>
                         <small>{{ orden.cliente.tipo_cliente }}</small>
                     </td>
-
-                    <td data-label="Servicio">
-                        {{ orden.tipo_servicio }}
-                    </td>
-
                     <td data-label="Entrega">
                         {{ orden.fecha_entrega|date:"d/m/Y" }}
                     </td>
 
                     <td data-label="Estado">
                         <span class="badge
-                            {% if orden.estado == 'Completado' %}success
-                            {% elif orden.estado == 'Cancelado' %}danger
-                            {% else %}warn{% endif %}">
+        {% if orden.estado == 'Pendiente' %}danger
+        {% elif orden.estado == 'En proceso' %}warn
+        {% elif orden.estado == 'Completado' %}success
+        {% endif %}">
                             {{ orden.estado }}
                         </span>
                     </td>
+
 
                     <td data-label="Responsable">
                         {% if orden.responsable %}
