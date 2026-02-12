@@ -5,7 +5,6 @@
     --rojo: #d9534f;
     --verde: #5cb85c;
     --amarillo: #f0ad4e;
-    --info: #17a2b8;
     --sombra: 0 3px 10px rgba(0,0,0,.1);
     --radio: 14px;
     --trans: .3s ease;
@@ -23,7 +22,8 @@ body {
     min-height: 100vh;
 }
 
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
+
 .sidebar {
     width: 240px;
     position: fixed;
@@ -71,7 +71,8 @@ body {
     background: var(--rojo);
 }
 
-/* MAIN */
+/* ================= MAIN ================= */
+
 .main {
     margin-left: 240px;
     padding: 25px;
@@ -88,50 +89,39 @@ body {
     color: #555;
 }
 
-/* MENSAJES */
-.messages-container{
-    margin: 20px 0;
+/* ===== HEADER TOP (BOTÓN A LA DERECHA) ===== */
+
+.header-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.alert{
-    padding: 14px 18px;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    font-weight: 500;
-    box-shadow: var(--sombra);
-    animation: fadeIn .4s ease;
+.title-box {
+    display: flex;
+    flex-direction: column;
 }
 
-.alert.success{
-    background: #d4edda;
-    color: #155724;
-    border-left: 6px solid var(--verde);
+.btn-back {
+    margin-left: auto;
+    background: #e7f1ff;
+    color: #0B4B88;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: .25s;
+    box-shadow: 0 4px 10px rgba(0,0,0,.08);
 }
 
-.alert.error{
-    background: #f8d7da;
-    color: #721c24;
-    border-left: 6px solid var(--rojo);
+.btn-back:hover {
+    transform: translateY(-2px);
+    background: #d6e8ff;
 }
 
-.alert.warning{
-    background: #fff3cd;
-    color: #856404;
-    border-left: 6px solid var(--amarillo);
-}
+/* ================= BOTÓN HAMBURGUESA ================= */
 
-.alert.info{
-    background: #d1ecf1;
-    color: #0c5460;
-    border-left: 6px solid var(--info);
-}
-
-@keyframes fadeIn{
-    from{opacity:0; transform: translateY(-6px);}
-    to{opacity:1; transform: translateY(0);}
-}
-
-/* BOTÓN */
 .menu-toggle {
     display: none;
     position: fixed;
@@ -147,7 +137,8 @@ body {
     z-index: 1100;
 }
 
-/* OVERLAY */
+/* ================= OVERLAY ================= */
+
 .overlay {
     display: none;
     position: fixed;
@@ -156,7 +147,8 @@ body {
     z-index: 900;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
+
 .footer {
     margin-left: 240px;
     background: var(--azul);
@@ -166,7 +158,8 @@ body {
     transition: var(--trans);
 }
 
-/* RESPONSIVE */
+/* ================= RESPONSIVE ================= */
+
 @media (max-width: 900px) {
 
     .menu-toggle {

@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block contenido_dashboard %}
-
 <div class="panel">
 
     <!-- HEADER -->
@@ -18,11 +17,11 @@
     <!-- TABLA -->
     <div class="table-container">
         <table>
-
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Cliente</th>
+                    <th>Servicio</th>
                     <th>Entrega</th>
                     <th>Estado</th>
                     <th>Responsable</th>
@@ -34,69 +33,96 @@
                 {% for orden in ordenes %}
                 <tr>
 
-                    <td data-label="ID">
-                        #{{ orden.id }}
-                    </td>
+                    <td>#{{ orden.id }}</td>
 
-                    <td data-label="Cliente">
+                    <td>
                         {{ orden.cliente.nombre }} <br>
                         <small>{{ orden.cliente.tipo_cliente }}</small>
                     </td>
-                    <td data-label="Entrega">
-                        {{ orden.fecha_entrega|date:"d/m/Y" }}
-                    </td>
 
-                    <td data-label="Estado">
+                    <td>{{ orden.tipo_servicio }}</td>
+
+                    <td>{{ orden.fecha_entrega|date:"d/m/Y" }}</td>
+
+                    <td>
                         <span class="badge
-        {% if orden.estado == 'Pendiente' %}danger
-        {% elif orden.estado == 'En proceso' %}warn
-        {% elif orden.estado == 'Completado' %}success
-        {% endif %}">
+                            {% if orden.estado == 'Completado' %}success
+                            {% elif orden.estado == 'Cancelado' %}danger
+                            {% else %}warn{% endif %}">
                             {{ orden.estado }}
                         </span>
                     </td>
 
-
-                    <td data-label="Responsable">
+                    <td>
                         {% if orden.responsable %}
-                        {{ orden.responsable.nombre_completo }}
+                            {{ orden.responsable.nombre_completo }}
                         {% else %}
-                        —
+                            —
                         {% endif %}
                     </td>
 
-                    <td data-label="Acciones">
+                    <td>
 
-                        <a href="{% url 'orden_edit' orden.id %}" class="btn edit">
-                            ✏️ Editar
-                        </a>
+                        <a href="{% url 'orden_edit' orden.id %}" class="btn edit">✏️ Editar</a>
 
-                        <a href="{% url 'orden_detail' orden.id %}" class="btn warn">
-                            👁 Ver
-                        </a>
+                        <button class="btn small danger"
+                                onclick="openDeleteModal({{ orden.id }})">
+                            🗑 Eliminar
+                        </button>
 
-                        <!-- NUEVO -->
+                        <a href="{% url 'orden_detail' orden.id %}" class="btn warn">👁 Ver</a>
+
                         <a href="{% url 'orden_revision' orden.id %}" class="btn primary">
                             ⚙ Revisar orden
                         </a>
 
                     </td>
-
-
                 </tr>
+
+                <!-- MODAL POR CADA ORDEN -->
+                <div id="deleteModal-{{ orden.id }}" class="modal">
+                    <div class="modal-content">
+                        <h3>⚠️ Confirmar eliminación</h3>
+                        <p>
+                            ¿Estás seguro de eliminar la orden
+                            <strong>#{{ orden.id }}</strong>?
+                        </p>
+
+                        <form method="POST" action="{% url 'orden_delete' orden.id %}">
+                            {% csrf_token %}
+                            <div class="modal-actions">
+                                <button type="button" class="btn warn"
+                                        onclick="closeDeleteModal({{ orden.id }})">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="btn danger">
+                                    Sí, eliminar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
                 {% empty %}
                 <tr>
-                    <td colspan="8" style="text-align:center; padding:30px;">
+                    <td colspan="7" style="text-align:center; padding:30px;">
                         No hay órdenes registradas
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
-
         </table>
     </div>
 
 </div>
+
+<script>
+function openDeleteModal(id) {
+    document.getElementById("deleteModal-" + id).style.display = "flex";
+}
+function closeDeleteModal(id) {
+    document.getElementById("deleteModal-" + id).style.display = "none";
+}
+</script>
 
 {% endblock %}

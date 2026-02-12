@@ -1,86 +1,67 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Rótulos Publicidad</title>
+
     <link rel="stylesheet" href="{% static 'appR/css/dashboard.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 
 <body>
 
-    <div class="overlay" id="overlay"></div>
+<div class="overlay" id="overlay"></div>
 
-    <aside class="sidebar" id="sidebar">
-        <div class="brand">
-            <img src="{% static 'appR/img/logo.png' %}">
-            <h2>Rótulos Publicidad</h2>
-        </div>
-
-        <nav class="menu">
-
-            <a href="{% url 'inicio' %}" class="{% if request.resolver_match.url_name == 'inicio' %}active{% endif %}">
-                📊 Dashboard
-            </a>
-
-            <a href="{% url 'list' %}"
-                class="{% if request.resolver_match.url_name == 'list' or request.resolver_match.url_name == 'editar_usuario' or request.resolver_match.url_name == 'agregar_usuario' or request.resolver_match.url_name == 'deshabilitar_usuario' or request.resolver_match.url_name == 'habilitar_usuario' or request.resolver_match.url_name == 'eliminar_usuario' %}active{% endif %}">
-                🙍‍♂️ Usuarios
-            </a>
-
-            <a href="{% url 'clientes_list' %}"
-                class="{% if request.resolver_match.url_name == 'clientes_list' or request.resolver_match.url_name == 'cliente_agregar' or request.resolver_match.url_name == 'cliente_editar' %}active{% endif %}">
-                👥 Clientes
-            </a>
-
-            <a href="{% url 'ordenes_list' %}"
-                class="{% if request.resolver_match.url_name == 'ordenes_list' or request.resolver_match.url_name == 'orden_create' or request.resolver_match.url_name == 'orden_detail' or request.resolver_match.url_name == 'orden_edit' or request.resolver_match.url_name == 'orden_delete' or request.resolver_match.url_name == 'orden_revision' %}active{% endif %}">
-                🗂 Órdenes
-            </a>
-
-            <a href="{% url 'mis_tareas' %}"
-                class="{% if request.resolver_match.url_name == 'mis_tareas' or request.resolver_match.url_name == 'completar_tarea' or request.resolver_match.url_name == 'eliminar_tarea' %}active{% endif %}">
-                📝 Tareas
-            </a>
-
-            <a href="{% url 'logout' %}" class="logout">⛔ Cerrar sesión</a>
-
-        </nav>
-    </aside>
-
-    <div class="main">
-
-        <button class="menu-toggle" id="menuToggle">☰</button>
-
-        <header class="header">
-            <h1>Panel de Control</h1>
-            <p>Bienvenido {{ user.first_name }}</p>
-        </header>
-
-        {% if messages %}
-        <div class="messages-container">
-            {% for message in messages %}
-            <div class="alert {{ message.tags }}">
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <main>
-            {% block contenido_dashboard %}{% endblock %}
-        </main>
-
+<aside class="sidebar" id="sidebar">
+    <div class="brand">
+        <img src="{% static 'appR/img/logo.png' %}">
+        <h2>Rótulos Publicidad</h2>
     </div>
 
-    <footer class="footer">
-        © 2025 Rótulos Publicidad — Sistema de gestión
-    </footer>
+    <nav class="menu">
+        <a href="{% url 'inicio' %}" class="active">📊 Dashboard</a>
+        <a href="{% url 'list' %}">🙍‍♂️ Usuarios</a>
+        <a href="{% url 'clientes_list' %}">👥 Clientes</a>
+        <a href="{% url 'ordenes_list' %}">🗂 Órdenes</a>
+        <a href="{% url 'mis_tareas' %}">📝 Tareas</a>
+        <a href="{% url 'logout' %}" class="logout">⛔ Cerrar sesión</a>
+    </nav>
+</aside>
 
-    <script src="{% static 'appR/js/dashboard.js' %}"></script>
+<div class="main">
+
+    <button class="menu-toggle" id="menuToggle">☰</button>
+
+    <header class="header">
+        <div class="header-top">
+
+            <div class="title-box">
+                <h1>Panel de Control</h1>
+                <p>Bienvenido {{ user.first_name }}</p>
+            </div>
+
+            {% if request.resolver_match.url_name != 'inicio' %}
+            <button class="btn-back" onclick="history.back()">
+                ← Volver atrás
+            </button>
+            {% endif %}
+
+        </div>
+    </header>
+
+    <main>
+        {% block contenido_dashboard %}
+        {% endblock %}
+    </main>
+
+</div>
+
+<footer class="footer">
+    © 2025 Rótulos Publicidad — Sistema de gestión
+</footer>
+
+<script src="{% static 'appR/js/dashboard.js' %}"></script>
 </body>
-
 </html>
