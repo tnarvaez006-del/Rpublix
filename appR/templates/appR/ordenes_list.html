@@ -55,28 +55,30 @@
 
                     <td>
                         {% if orden.responsable %}
-                            {{ orden.responsable.nombre_completo }}
+                        {{ orden.responsable.nombre_completo }}
                         {% else %}
-                            —
+                        —
                         {% endif %}
                     </td>
 
-                    <td>
+                    <td data-label="Acciones">
+                        <div class="acciones">
 
-                        <a href="{% url 'orden_edit' orden.id %}" class="btn edit">✏️ Editar</a>
+                            <a href="{% url 'orden_edit' orden.id %}" class="btn edit">✏️ Editar</a>
 
-                        <button class="btn small danger"
-                                onclick="openDeleteModal({{ orden.id }})">
-                            🗑 Eliminar
-                        </button>
+                            <button class="btn danger" onclick="openDeleteModal({{ orden.id }})">
+                                🗑 Eliminar
+                            </button>
 
-                        <a href="{% url 'orden_detail' orden.id %}" class="btn warn">👁 Ver</a>
+                            <a href="{% url 'orden_detail' orden.id %}" class="btn warn">👁 Ver</a>
 
-                        <a href="{% url 'orden_revision' orden.id %}" class="btn primary">
-                            ⚙ Revisar orden
-                        </a>
+                            <a href="{% url 'orden_revision' orden.id %}" class="btn primary">
+                                ⚙ Revisar
+                            </a>
 
+                        </div>
                     </td>
+
                 </tr>
 
                 <!-- MODAL POR CADA ORDEN -->
@@ -91,8 +93,7 @@
                         <form method="POST" action="{% url 'orden_delete' orden.id %}">
                             {% csrf_token %}
                             <div class="modal-actions">
-                                <button type="button" class="btn warn"
-                                        onclick="closeDeleteModal({{ orden.id }})">
+                                <button type="button" class="btn warn" onclick="closeDeleteModal({{ orden.id }})">
                                     Cancelar
                                 </button>
                                 <button type="submit" class="btn danger">
@@ -117,12 +118,12 @@
 </div>
 
 <script>
-function openDeleteModal(id) {
-    document.getElementById("deleteModal-" + id).style.display = "flex";
-}
-function closeDeleteModal(id) {
-    document.getElementById("deleteModal-" + id).style.display = "none";
-}
+    function openDeleteModal(id) {
+        document.getElementById("deleteModal-" + id).style.display = "flex";
+    }
+    function closeDeleteModal(id) {
+        document.getElementById("deleteModal-" + id).style.display = "none";
+    }
 </script>
 
 {% endblock %}

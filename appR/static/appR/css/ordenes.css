@@ -54,9 +54,6 @@
 table {
     width: 100%;
     border-collapse: collapse;
-    background: #fff;
-    border-radius: 18px;
-    overflow: hidden;
 }
 
 thead {
@@ -112,46 +109,39 @@ td small {
 /* ================= BOTONES ================= */
 
 .btn {
-    padding: 7px 14px;
+    padding: 8px 12px;
     border-radius: 10px;
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 600;
     text-decoration: none;
-    transition: .25s;
-    margin-right: 6px;
-    display: inline-block;
     border: none;
     cursor: pointer;
+    transition: .2s;
+    white-space: nowrap;
 }
 
-.btn.edit {
-    background: #e8f1ff;
-    color: #1d5fd1;
-}
-
-.btn.warn {
-    background: #fff4db;
-    color: #d48806;
-}
-
-.btn.primary {
-    background: #e7f1ff;
-    color: #0B4B88;
-}
-
-.btn.danger {
-    background: #fdeaea;
-    color: #dc3545;
-}
+.btn.edit { background: #e8f1ff; color: #1d5fd1; }
+.btn.warn { background: #fff4db; color: #d48806; }
+.btn.primary { background: #e7f1ff; color: #0B4B88; }
+.btn.danger { background: #fdeaea; color: #dc3545; }
 
 .btn:hover {
-    filter: brightness(.92);
+    transform: translateY(-1px);
 }
 
-/* ================= MODAL ELIMINAR ================= */
+/* ================= ACCIONES (LA CLAVE) ================= */
+
+.acciones {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* ================= MODAL ================= */
 
 .modal {
-    display: none;              /* 🔥 CLAVE para que no se vean todos */
+    display: none;
     position: fixed;
     z-index: 9999;
     left: 0;
@@ -172,11 +162,6 @@ td small {
     text-align: center;
 }
 
-.modal-content h3 {
-    margin-bottom: 10px;
-    color: #dc3545;
-}
-
 .modal-actions {
     margin-top: 18px;
     display: flex;
@@ -185,18 +170,14 @@ td small {
 }
 
 /* ======================================================
-   RESPONSIVE — MOBILE FIRST
+   RESPONSIVE — MOBILE
 ====================================================== */
 
 @media (max-width: 900px) {
 
-    thead {
-        display: none;
-    }
+    thead { display: none; }
 
-    table,
-    tbody,
-    tr {
+    table, tbody, tr {
         display: block;
         width: 100%;
     }
@@ -213,25 +194,26 @@ td small {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 8px 0;
+        padding: 10px 0;
         border: none;
         font-size: 13px;
     }
 
     td::before {
         content: attr(data-label);
-        font-weight: 600;
+        font-weight: 700;
         color: #0B4B88;
     }
 
-    td:last-child {
+    /* 🔥 AQUÍ QUEDAN PERFECTOS EN MÓVIL */
+    .acciones {
+        width: 100%;
         justify-content: flex-end;
-        gap: 10px;
-        margin-top: 10px;
-        flex-wrap: wrap;
+        margin-top: 12px;
     }
 
     .btn {
-        margin-right: 0;
+        flex: 1 1 48%;
+        text-align: center;
     }
 }
