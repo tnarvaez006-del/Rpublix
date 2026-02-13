@@ -1,219 +1,146 @@
-/* ======================================================
-   ÓRDENES DE TRABAJO | PANEL ERP
-====================================================== */
-
-.panel {
-    background: #fff;
-    padding: 26px 30px;
-    border-radius: 22px;
-    box-shadow: 0 10px 28px rgba(0,0,0,.07);
-    margin-top: 20px;
+.panel{
+    background:#fff;
+    padding:26px 30px;
+    border-radius:22px;
+    box-shadow:0 10px 28px rgba(0,0,0,.07);
+    margin-top:20px;
 }
 
-/* ================= HEADER ================= */
-
-.header-panel {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 22px;
+.header-panel{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-bottom:22px;
 }
 
-.header-panel h2 {
-    font-size: 22px;
-    font-weight: 600;
-    color: #0B4B88;
+.btn-add{
+    background:linear-gradient(135deg,#0B4B88,#1d6fd6);
+    color:#fff;
+    padding:11px 22px;
+    border-radius:14px;
+    font-size:14px;
+    text-decoration:none;
 }
 
-/* ================= BOTÓN NUEVO ================= */
+/* TABLA */
+.table-container{ overflow-x:auto; }
 
-.btn-add {
-    background: linear-gradient(135deg, #0B4B88, #1d6fd6);
-    color: #fff;
-    padding: 11px 22px;
-    border-radius: 14px;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    box-shadow: 0 6px 18px rgba(11,75,136,.35);
-    transition: .25s;
+table{ width:100%; border-collapse:collapse; }
+
+thead{
+    background:#0B4B88;
+    color:#fff;
 }
 
-.btn-add:hover {
-    transform: translateY(-2px);
+th,td{
+    padding:14px;
+    font-size:14px;
+    text-align:left;
 }
 
-/* ================= TABLA ================= */
+td{ border-bottom:1px solid #eee; }
 
-.table-container {
-    overflow-x: auto;
+/* BADGES ESTADOS */
+.badge{
+    padding:6px 14px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:600;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+.badge.success{ background:#e6f7ef; color:#198754; }   /* Completado */
+.badge.warn{ background:#fff4db; color:#d48806; }      /* En proceso */
+.badge.danger{ background:#fdeaea; color:#dc3545; }    /* Pendiente */
+
+/* BOTONES */
+.btn{
+    padding:8px 12px;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:600;
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+    white-space:nowrap;
 }
 
-thead {
-    background: #0B4B88;
-    color: #fff;
+.btn.edit{ background:#e8f1ff; color:#1d5fd1; }
+.btn.warn{ background:#fff4db; color:#d48806; }
+.btn.primary{ background:#e7f1ff; color:#0B4B88; }
+.btn.danger{ background:#fdeaea; color:#dc3545; }
+
+.acciones{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
 }
 
-th, td {
-    padding: 14px;
-    font-size: 14px;
-    text-align: left;
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    z-index:9999;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    justify-content:center;
+    align-items:center;
 }
 
-td {
-    border-bottom: 1px solid #eee;
-    color: #333;
+.modal-content{
+    background:#fff;
+    padding:25px 30px;
+    border-radius:16px;
+    width:420px;
 }
 
-tbody tr:hover {
-    background: #f4f8ff;
+.modal-actions{
+    margin-top:18px;
+    display:flex;
+    justify-content:center;
+    gap:12px;
 }
 
-td small {
-    font-size: 12px;
-    color: #777;
-}
+/* RESPONSIVE PERFECTO */
+@media (max-width:900px){
 
-/* ================= BADGES ================= */
+    thead{ display:none; }
 
-.badge {
-    padding: 6px 14px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-block;
-}
-
-.badge.success {
-    background: #e6f7ef;
-    color: #198754;
-}
-
-.badge.warn {
-    background: #fff4db;
-    color: #d48806;
-}
-
-.badge.danger {
-    background: #fdeaea;
-    color: #dc3545;
-}
-
-/* ================= BOTONES ================= */
-
-.btn {
-    padding: 8px 12px;
-    border-radius: 10px;
-    font-size: 12px;
-    font-weight: 600;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: .2s;
-    white-space: nowrap;
-}
-
-.btn.edit { background: #e8f1ff; color: #1d5fd1; }
-.btn.warn { background: #fff4db; color: #d48806; }
-.btn.primary { background: #e7f1ff; color: #0B4B88; }
-.btn.danger { background: #fdeaea; color: #dc3545; }
-
-.btn:hover {
-    transform: translateY(-1px);
-}
-
-/* ================= ACCIONES (LA CLAVE) ================= */
-
-.acciones {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-/* ================= MODAL ================= */
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: #fff;
-    padding: 25px 30px;
-    border-radius: 16px;
-    width: 420px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.2);
-    text-align: center;
-}
-
-.modal-actions {
-    margin-top: 18px;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-}
-
-/* ======================================================
-   RESPONSIVE — MOBILE
-====================================================== */
-
-@media (max-width: 900px) {
-
-    thead { display: none; }
-
-    table, tbody, tr {
-        display: block;
-        width: 100%;
+    table,tbody,tr{
+        display:block;
+        width:100%;
     }
 
-    tbody tr {
-        background: #fff;
-        margin-bottom: 18px;
-        padding: 18px 20px;
-        border-radius: 18px;
-        box-shadow: 0 6px 16px rgba(0,0,0,.08);
+    tbody tr{
+        background:#fff;
+        margin-bottom:18px;
+        padding:18px 20px;
+        border-radius:18px;
+        box-shadow:0 6px 16px rgba(0,0,0,.08);
     }
 
-    td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        border: none;
-        font-size: 13px;
+    td{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:10px 0;
+        border:none;
     }
 
-    td::before {
-        content: attr(data-label);
-        font-weight: 700;
-        color: #0B4B88;
+    td::before{
+        content:attr(data-label);
+        font-weight:700;
+        color:#0B4B88;
     }
 
-    /* 🔥 AQUÍ QUEDAN PERFECTOS EN MÓVIL */
-    .acciones {
-        width: 100%;
-        justify-content: flex-end;
-        margin-top: 12px;
+    .acciones{
+        width:100%;
+        margin-top:12px;
     }
 
-    .btn {
-        flex: 1 1 48%;
-        text-align: center;
+    .btn{
+        flex:1 1 48%;
+        text-align:center;
     }
 }
