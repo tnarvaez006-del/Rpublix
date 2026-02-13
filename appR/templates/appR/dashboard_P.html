@@ -43,7 +43,7 @@
             </div>
 
             {% if request.resolver_match.url_name != 'inicio' %}
-            <button class="btn-back" onclick="history.back()">
+            <button class="btn-back" onclick="goBackAndRefresh()">
                 ← Volver atrás
             </button>
             {% endif %}
@@ -63,5 +63,22 @@
 </footer>
 
 <script src="{% static 'appR/js/dashboard.js' %}"></script>
+
+<!-- 🔥 FUNCIÓN CORRECTA PARA VOLVER ATRÁS RECARGANDO -->
+<script>
+function goBackAndRefresh() {
+    if (document.referrer && document.referrer !== window.location.href) {
+        // Va a la página anterior FORZANDO recarga real
+        window.location.href = document.referrer;
+    } else {
+        // Si no hay referrer confiable
+        history.back();
+        setTimeout(function () {
+            location.reload(true);
+        }, 300);
+    }
+}
+</script>
+
 </body>
 </html>
