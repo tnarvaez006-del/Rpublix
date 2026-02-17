@@ -21,12 +21,36 @@
     </div>
 
     <nav class="menu">
-        <a href="{% url 'inicio' %}" class="active">📊 Dashboard</a>
-        <a href="{% url 'list' %}">🙍‍♂️ Usuarios</a>
-        <a href="{% url 'clientes_list' %}">👥 Clientes</a>
-        <a href="{% url 'ordenes_list' %}">🗂 Órdenes</a>
-        <a href="{% url 'mis_tareas' %}">📝 Tareas</a>
-        <a href="{% url 'logout' %}" class="logout">⛔ Cerrar sesión</a>
+
+        <a href="{% url 'inicio' %}" 
+           class="{% if request.resolver_match.url_name == 'inicio' %}active{% endif %}">
+           📊 Dashboard
+        </a>
+
+        <a href="{% url 'list' %}" 
+           class="{% if request.resolver_match.url_name == 'list' %}active{% endif %}">
+           🙍‍♂️ Usuarios
+        </a>
+
+        <a href="{% url 'clientes_list' %}" 
+           class="{% if request.resolver_match.url_name == 'clientes_list' %}active{% endif %}">
+           👥 Clientes
+        </a>
+
+        <a href="{% url 'ordenes_list' %}" 
+           class="{% if request.resolver_match.url_name == 'ordenes_list' %}active{% endif %}">
+           🗂 Órdenes
+        </a>
+
+        <a href="{% url 'mis_tareas' %}" 
+           class="{% if request.resolver_match.url_name == 'mis_tareas' %}active{% endif %}">
+           📝 Tareas
+        </a>
+
+        <a href="{% url 'logout' %}" class="logout">
+           ⛔ Cerrar sesión
+        </a>
+
     </nav>
 </aside>
 
@@ -64,14 +88,11 @@
 
 <script src="{% static 'appR/js/dashboard.js' %}"></script>
 
-<!-- 🔥 FUNCIÓN CORRECTA PARA VOLVER ATRÁS RECARGANDO -->
 <script>
 function goBackAndRefresh() {
     if (document.referrer && document.referrer !== window.location.href) {
-        // Va a la página anterior FORZANDO recarga real
         window.location.href = document.referrer;
     } else {
-        // Si no hay referrer confiable
         history.back();
         setTimeout(function () {
             location.reload(true);
