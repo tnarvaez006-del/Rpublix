@@ -12,8 +12,8 @@
     <div class="header-panel">
         <h2>Usuarios</h2>
 
-        {# SOLO Admin y Privilegiado pueden agregar #}
-        {% if request.user.rol == "Admin" or request.user.rol == "Privilegiado" %}
+        {# SOLO Admin pueden agregar #}
+        {% if request.user.rol == "Admin"%}
         <a href="{% url 'agregar_usuario' %}" class="btn-add">
             + Agregar usuario
         </a>
