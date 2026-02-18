@@ -54,7 +54,7 @@
                         {# ================= REGLA GENERAL ================= #}
                         {# Admin puede todo. Privilegiado solo si el usuario NO es Admin #}
 
-                        {% if request.user.rol == "Admin" or request.user.rol == "Privilegiado" and u.rol != "Admin" %}
+                        {% if request.user.rol == "Admin"%}
 
                             <a href="{% url 'editar_usuario' u.id %}" class="btn small edit">Editar</a>
 
