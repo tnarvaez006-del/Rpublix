@@ -13,7 +13,7 @@
         <h2>{% if editando %}Editar Orden{% else %}Nueva Orden{% endif %}</h2>
     </div>
 
-    <form method="POST" class="orden-form">
+    <form method="POST" class="orden-form" id="orden-form">
         {% csrf_token %}
 
         <!-- CLIENTE -->
@@ -32,6 +32,9 @@
         <div class="form-group">
             <label>Fecha de entrega</label>
             {{ form.fecha_entrega }}
+            <small id="fecha-error" style="color:red; display:none;">
+                No puedes seleccionar una fecha anterior a hoy.
+            </small>
         </div>
 
         <hr>
@@ -58,21 +61,62 @@
      ITEMS EXISTENTES (EDICIÓN)
 =========================== -->
 <script>
-    const existingItems = [
-        {% if items %}
-    {% for item in items %}
-    {
-        nombre: "{{ item.nombre|escapejs }}",
+const existingItems = [
+    {% if items %}
+        {% for item in items %}
+        {
+            nombre: "{{ item.nombre|escapejs }}",
             cantidad: "{{ item.cantidad }}",
-                requerimientos: [
-                    {% for req in item.requerimientos.all %}
-    "{{ req.descripcion|escapejs }}",
+            requerimientos: [
+                {% for req in item.requerimientos.all %}
+                "{{ req.descripcion|escapejs }}",
+                {% endfor %}
+            ]
+        },
         {% endfor %}
-    ]
-},
-    {% endfor %}
     {% endif %}
 ];
+</script>
+
+<!-- ===========================
+     VALIDACIÓN DE FECHA
+=========================== -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const fechaInput = document.querySelector("input[type='date']");
+    const submitBtn = document.getElementById("submit-btn");
+    const fechaError = document.getElementById("fecha-error");
+
+    if (fechaInput) {
+
+        // Obtener fecha actual en formato YYYY-MM-DD
+        const hoy = new Date();
+        const year = hoy.getFullYear();
+        const month = String(hoy.getMonth() + 1).padStart(2, '0');
+        const day = String(hoy.getDate()).padStart(2, '0');
+        const fechaHoy = `${year}-${month}-${day}`;
+
+        // Bloquear fechas anteriores
+        fechaInput.setAttribute("min", fechaHoy);
+
+        function validarFecha() {
+            if (fechaInput.value < fechaHoy) {
+                fechaError.style.display = "block";
+                submitBtn.disabled = true;
+            } else {
+                fechaError.style.display = "none";
+                submitBtn.disabled = false;
+            }
+        }
+
+        fechaInput.addEventListener("change", validarFecha);
+
+        // Validar al cargar (por si está editando)
+        validarFecha();
+    }
+
+});
 </script>
 
 <script src="{% static 'appR/js/orden_form.js' %}"></script>

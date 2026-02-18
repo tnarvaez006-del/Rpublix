@@ -29,7 +29,9 @@
                     <th>Correo</th>
                     <th>Rol</th>
                     <th>Estado</th>
+                    {% if request.user.rol == "Admin"%}
                     <th>Acciones</th>
+                    {% endif %}
                 </tr>
             </thead>
 
@@ -43,9 +45,9 @@
 
                     <td data-label="Estado">
                         {% if u.is_active %}
-                            <span class="badge success">Activo</span>
+                        <span class="badge success">Activo</span>
                         {% else %}
-                            <span class="badge danger">Inactivo</span>
+                        <span class="badge danger">Inactivo</span>
                         {% endif %}
                     </td>
 
@@ -56,19 +58,18 @@
 
                         {% if request.user.rol == "Admin"%}
 
-                            <a href="{% url 'editar_usuario' u.id %}" class="btn small edit">Editar</a>
+                        <a href="{% url 'editar_usuario' u.id %}" class="btn small edit">Editar</a>
 
-                            {% if u.is_active %}
-                                <a href="{% url 'deshabilitar_usuario' u.id %}" class="btn small warn">Deshabilitar</a>
-                            {% else %}
-                                <a href="{% url 'habilitar_usuario' u.id %}" class="btn small success">Habilitar</a>
-                            {% endif %}
+                        {% if u.is_active %}
+                        <a href="{% url 'deshabilitar_usuario' u.id %}" class="btn small warn">Deshabilitar</a>
+                        {% else %}
+                        <a href="{% url 'habilitar_usuario' u.id %}" class="btn small success">Habilitar</a>
+                        {% endif %}
 
-                            <a href="{% url 'eliminar_usuario' u.id %}"
-                               class="btn small danger"
-                               onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
-                               Eliminar
-                            </a>
+                        <a href="{% url 'eliminar_usuario' u.id %}" class="btn small danger"
+                            onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
+                            Eliminar
+                        </a>
 
                         {% endif %}
 
