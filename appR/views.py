@@ -414,15 +414,13 @@ def orden_delete(request, pk):
 
     return redirect("orden_detail", pk=pk)
 
-
-
-
 @login_required(login_url='login')
-def dasboard_layaut_Principal_view(request):
-    today = timezone.localtime().date()
+def dashboard_layout_principal_view(request):
+
+    today = timezone.localdate()
     user = request.user
 
-    # 🔥 FILTRO BASE SEGÚN ROL
+    # ================= FILTRO BASE SEGÚN ROL =================
     if user.rol == "Admin":
         ordenes = Orden.objects.all()
     else:
@@ -444,10 +442,14 @@ def dasboard_layaut_Principal_view(request):
         fecha_entrega__lt=today
     ).count()
 
-    # ================= ÓRDENES RECIENTES =================
-    recent_orders = ordenes.select_related("cliente") \
-        .order_by("-fecha_creacion")[:5]
+    # ================= ÓRDENES RECIENTES (MÁXIMO 6) =================
+    recent_orders = (
+        ordenes
+        .select_related("cliente")
+        .order_by("-fecha_creacion")[:6]   # 🔥 AQUÍ el límite real
+    )
 
+    # ================= PROGRESO DINÁMICO =================
     for order in recent_orders:
         if order.estado == "Completado":
             order.progress = 100
@@ -472,14 +474,20 @@ def dasboard_layaut_Principal_view(request):
         fecha_entrega__gt=today
     ).count()
 
-    # ================= SERVICIOS RECIENTES =================
+    # ================= SERVICIOS RECIENTES (MÁXIMO 6) =================
     if user.rol == "Admin":
-        recent_services = ItemServicio.objects.select_related("orden") \
+        recent_services = (
+            ItemServicio.objects
+            .select_related("orden")
             .order_by("-id")[:6]
+        )
     else:
-        recent_services = ItemServicio.objects.select_related("orden") \
-            .filter(orden__responsable=user) \
+        recent_services = (
+            ItemServicio.objects
+            .select_related("orden")
+            .filter(orden__responsable=user)
             .order_by("-id")[:6]
+        )
 
     context = {
         "total_orders": total_orders,
@@ -499,7 +507,6 @@ def dasboard_layaut_Principal_view(request):
         "appR/dasboard_layaut_Principal.html",
         context
     )
-
 
 @login_required
 def orden_revision(request, orden_id):
