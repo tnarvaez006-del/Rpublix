@@ -415,7 +415,7 @@ def orden_delete(request, pk):
     return redirect("orden_detail", pk=pk)
 
 @login_required(login_url='login')
-def dashboard_layout_principal_view(request):
+def dasboard_layaut_Principal_view(request):
 
     today = timezone.localdate()
     user = request.user
