@@ -6,8 +6,8 @@ from django.db import models
 #       ROLES
 # ============================
 ROLES = (
-    ("Empleado", "Horario"),
-    ("Privilegiado", "Planta"),
+    ("Empleado", "Digitador"),
+    ("Privilegiado", "Supervisor"),
     ("Admin", "Admin del sistema"),
 )
 
