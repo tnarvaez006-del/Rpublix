@@ -304,12 +304,17 @@ def ordenes_list(request):
 
 @login_required
 def crear_orden(request):
+
     if request.method == "POST":
-        form = OrdenForm(request.POST)
+        form = OrdenForm(request.POST, user=request.user)
 
         if form.is_valid():
             orden = form.save(commit=False)
-            orden.responsable = request.user   # 👈 USUARIO LOGUEADO
+
+            # 🔒 Si NO es admin, el responsable es el usuario logueado
+            if request.user.rol != "Admin":
+                orden.responsable = request.user
+
             orden.save()
 
             items = request.POST.getlist("item_nombre[]")
@@ -330,46 +335,54 @@ def crear_orden(request):
                     )
 
             return redirect("ordenes_list")
+
     else:
-        form = OrdenForm()
+        # 👇 AQUÍ ESTÁ EL FIX
+        form = OrdenForm(user=request.user)
 
     return render(request, "appR/orden_form.html", {"form": form})
-
-
-def validar_acceso_orden(request, orden):
-    if request.user.rol != "Admin" and orden.responsable != request.user:
-        return False
-    return True
 
 
 @login_required
 def orden_edit(request, orden_id):
     orden = get_object_or_404(Orden, pk=orden_id)
 
+    # 🔐 Validar acceso a la orden
     if not validar_acceso_orden(request, orden):
         return redirect("ordenes_list")
 
-    form = OrdenForm(
-        request.POST or None,
-        instance=orden,
-        user=request.user   # 👈 PASAMOS EL USUARIO
-    )
+    if request.method == "POST":
+        form = OrdenForm(
+            request.POST,
+            instance=orden,
+            user=request.user
+        )
 
-    if request.method == "POST" and form.is_valid():
-        orden = form.save(commit=False)
+        if form.is_valid():
+            orden_editada = form.save(commit=False)
 
-        # 🔒 Protección extra backend
-        if request.user.rol != "Admin":
-            orden.responsable = orden.responsable  # no lo cambia
+            # 🔒 PROTECCIÓN REAL BACKEND
+            if request.user.rol != "Admin":
+                # Recuperamos el responsable original desde la base de datos
+                orden_original = Orden.objects.get(pk=orden.id)
+                orden_editada.responsable = orden_original.responsable
 
-        orden.save()
+            orden_editada.save()
 
-        return redirect('orden_detail', orden_id=orden.id)
+            return redirect("orden_detail", orden_id=orden_editada.id)
+
+    else:
+        form = OrdenForm(
+            instance=orden,
+            user=request.user
+        )
 
     return render(request, "appR/orden_form.html", {
         "form": form,
         "editando": True,
+        "orden": orden
     })
+
 
 
 @login_required
