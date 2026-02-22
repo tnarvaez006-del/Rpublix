@@ -16,19 +16,29 @@
     <form method="POST" class="orden-form" id="orden-form">
         {% csrf_token %}
 
-        <!-- CLIENTE -->
+        <!-- ================= CLIENTE ================= -->
         <div class="form-group">
             <label>Cliente</label>
             {{ form.cliente }}
         </div>
 
-        <!-- RESPONSABLE -->
+        <!-- ================= RESPONSABLE ================= -->
         <div class="form-group">
             <label>Responsable</label>
-            <input type="text" class="input" value="{{ request.user }}" disabled>
+
+            {% if request.user.rol == "Admin" %}
+                {{ form.responsable }}
+            {% else %}
+                <input 
+                    type="text" 
+                    class="input" 
+                    value="{% if editando %}{{ orden.responsable }}{% else %}{{ request.user }}{% endif %}" 
+                    disabled
+                >
+            {% endif %}
         </div>
 
-        <!-- FECHA -->
+        <!-- ================= FECHA ================= -->
         <div class="form-group">
             <label>Fecha de entrega</label>
             {{ form.fecha_entrega }}
@@ -39,7 +49,7 @@
 
         <hr>
 
-        <!-- ITEMS -->
+        <!-- ================= ITEMS ================= -->
         <h3 class="subtitle">Productos / Servicios</h3>
 
         <div id="items-container" class="items-container"></div>
@@ -62,8 +72,8 @@
 =========================== -->
 <script>
 const existingItems = [
-    {% if items %}
-        {% for item in items %}
+    {% if editando and orden %}
+        {% for item in orden.items.all %}
         {
             nombre: "{{ item.nombre|escapejs }}",
             cantidad: "{{ item.cantidad }}",
@@ -90,18 +100,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (fechaInput) {
 
-        // Obtener fecha actual en formato YYYY-MM-DD
         const hoy = new Date();
         const year = hoy.getFullYear();
         const month = String(hoy.getMonth() + 1).padStart(2, '0');
         const day = String(hoy.getDate()).padStart(2, '0');
         const fechaHoy = `${year}-${month}-${day}`;
 
-        // Bloquear fechas anteriores
         fechaInput.setAttribute("min", fechaHoy);
 
         function validarFecha() {
-            if (fechaInput.value < fechaHoy) {
+            if (fechaInput.value && fechaInput.value < fechaHoy) {
                 fechaError.style.display = "block";
                 submitBtn.disabled = true;
             } else {
@@ -111,8 +119,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         fechaInput.addEventListener("change", validarFecha);
-
-        // Validar al cargar (por si está editando)
         validarFecha();
     }
 

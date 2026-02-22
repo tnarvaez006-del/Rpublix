@@ -383,6 +383,19 @@ def orden_edit(request, orden_id):
         "orden": orden
     })
 
+def validar_acceso_orden(request, orden):
+    user = request.user
+
+    # Admin puede ver todo
+    if user.rol == "Admin":
+        return True
+
+    # Usuario normal solo puede acceder si es responsable
+    if orden.responsable == user:
+        return True
+
+    return False
+
 
 
 @login_required
