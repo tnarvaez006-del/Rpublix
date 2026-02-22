@@ -167,6 +167,7 @@ class ClienteForm(forms.ModelForm):
 #       FORMULARIO ORDEN
 # ============================
 class OrdenForm(forms.ModelForm):
+
     fecha_entrega = forms.DateField(
         widget=forms.DateInput(
             attrs={"type": "date", "class": "input"},
@@ -176,7 +177,15 @@ class OrdenForm(forms.ModelForm):
 
     class Meta:
         model = Orden
-        fields = ["cliente", "fecha_entrega", "responsable"]  # 👈 agregar responsable
+        fields = ["cliente", "fecha_entrega", "responsable"]
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop("user", None)   # 👈 aquí está el fix
+        super().__init__(*args, **kwargs)
+
+        # 🔐 Si NO es Admin, ocultamos responsable
+        if self.user and self.user.rol != "Admin":
+            self.fields["responsable"].widget = forms.HiddenInput()
 
 
 
