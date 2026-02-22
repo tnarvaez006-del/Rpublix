@@ -349,32 +349,26 @@ def orden_edit(request, orden_id):
     if not validar_acceso_orden(request, orden):
         return redirect("ordenes_list")
 
-    form = OrdenForm(request.POST or None, instance=orden)
-    items = orden.items.all().prefetch_related('requerimientos')
+    form = OrdenForm(
+        request.POST or None,
+        instance=orden,
+        user=request.user   # 👈 PASAMOS EL USUARIO
+    )
 
     if request.method == "POST" and form.is_valid():
-        form.save()
-        orden.items.all().delete()
+        orden = form.save(commit=False)
 
-        items_nombres = request.POST.getlist("item_nombre[]")
-        items_cantidades = request.POST.getlist("item_cantidad[]")
+        # 🔒 Protección extra backend
+        if request.user.rol != "Admin":
+            orden.responsable = orden.responsable  # no lo cambia
 
-        for idx, nombre in enumerate(items_nombres):
-            item = ItemServicio.objects.create(
-                orden=orden,
-                nombre=nombre,
-                cantidad=items_cantidades[idx]
-            )
-            requerimientos = request.POST.getlist(f"requerimientos_{idx}[]")
-            for req in requerimientos:
-                Requerimiento.objects.create(item=item, descripcion=req)
+        orden.save()
 
         return redirect('orden_detail', orden_id=orden.id)
 
     return render(request, "appR/orden_form.html", {
         "form": form,
         "editando": True,
-        "items": items,
     })
 
 

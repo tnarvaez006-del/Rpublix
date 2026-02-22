@@ -176,7 +176,7 @@ class OrdenForm(forms.ModelForm):
 
     class Meta:
         model = Orden
-        fields = ["cliente", "fecha_entrega"]
+        fields = ["cliente", "fecha_entrega", "responsable"]  # 👈 agregar responsable
 
 
 
